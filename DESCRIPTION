@@ -1,0 +1,28 @@
+Package: ClusteringR
+Type: Package
+Title: Clustering package
+Version: 0.1.0
+Author: Bouzidi Imen <bouzidi.imenn@gmail.com>
+Maintainer: The package maintainer <bouzidi.imenn@gmail.com>
+Description: Its functionality includes exploratory data analysis, 
+   data segmentation and data visualization.It is designed to handle 
+   realistic data sets : hedonic data set and sensory data set.
+   It makes use of several clustering methods as well as the
+   implementation of partition-validity approach.
+   Finally, a graphical user interface is implemented  with R shiny in order to propose a user friendly package.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Depends: 
+    plotly,
+    shinydashboard,
+    shiny,
+    dashboardthemes
+Imports: 
+    FactoMineR,
+    factoextra,
+    cluster,
+    clValid,
+    kohonen,
+    fields
