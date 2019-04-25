@@ -28,17 +28,7 @@ library(ClusteringR)
 cl <- Clustering(t(hedo),ClustMeth='Hierarchical',k=4,Hdismethod='euclidean',Hmethod="ward.D2",
                     Graph=F,VarCart=F,IndCart=F,ElbowP=F )
 #Plot of elbow method , dendrogram , variables representation and individuals
-library(cowplot)# to use plot_grid
-```
 
-    ## 
-    ## Attaching package: 'cowplot'
-
-    ## The following object is masked from 'package:ggplot2':
-    ## 
-    ##     ggsave
-
-``` r
 plot_grid(cl$ElbowP, cl$dendrogram, cl$Pvar, cl$Pind, hjust = 1, vjust = 1,
           scale = c(1, 1, 1, 1))
 ```
