@@ -58,7 +58,6 @@ switch (ClustMeth,
 
   classes=cutree(hc,k=k)
   class=as.factor(classes)
-  #C=catdes(hedo.class,num.var = 1)
   dend=as.dendrogram(hc)
   dend_plot=fviz_dend(hc, cex = 0.5, k=k, main = "Dendrogram ", xlab = "Objects", ylab = "Distance", # Cut in four groups
                       k_colors = "jco",rect = TRUE, # Add rectangle around groups
@@ -83,7 +82,7 @@ switch (ClustMeth,
             if(Ddismethod=="euclidean" ||Ddismethod=="manhattan") D=diana(Y,metric=Ddismethod,diss=FALSE)
             else stop('type must be "euclidean" or "manhattan"')
             dend_plot=fviz_dend(D, cex = 0.5, k=3, main = "Dendrogram ", xlab = "Objects", ylab = "Distance", # Cut in four groups
-                                k_colors = "jco",rect = TRUE, # Add rectangle around groups
+                                k_colors = "jco",rect = TRUE,
                                 rect_border = 'jco', rect_fill = F)
 
             if(Graph) show(dend_plot)
@@ -136,7 +135,7 @@ switch (ClustMeth,
       if (Pdismethod=='euclidean'||Pdismethod=='manhattan') p=pam(Y,k,metric = Pdismethod) #it's recomended to fix samples(default=5)
       else stop('Type must be "euclidean"or "manhattan"')
 
-      f=fviz_cluster(p,palette ="jco",# color paletteellipse.type ="t",# Concentration
+      f=fviz_cluster(p,palette ="jco",
                      ellipsegeom ="point",pointsize =1,ggtheme=theme_classic())
       if(Graph==T) show(f)
       class=as.factor(p$clustering)
