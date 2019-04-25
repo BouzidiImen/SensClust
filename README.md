@@ -2,6 +2,8 @@
 ClusteringR
 ===========
 
+[![Travis build status](https://travis-ci.org/BouzidiImen/ClusteringR.svg?branch=master)](https://travis-ci.org/BouzidiImen/ClusteringR)
+
 <!-- badges: start -->
 <!-- badges: end -->
 

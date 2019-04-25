@@ -15,7 +15,7 @@
 #' @param IndCart  TRUE if you want to visualize Distribution of consumers
 #' @param ElbowP TRUE if you want to visualize The plot of the elbow method for Hierarchical method
 #'
-#' @return list of things
+#' @return list
 #' @export
 #' @import FactoMineR
 #' @import factoextra
