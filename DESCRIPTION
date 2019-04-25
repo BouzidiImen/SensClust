@@ -18,11 +18,11 @@ Depends:
     plotly,
     shinydashboard,
     shiny,
-    dashboardthemes,
     R (>= 2.10)
 Imports: 
     FactoMineR,
     factoextra,
+    dashboardthemes,
     cluster,
     clValid,
     kohonen,
