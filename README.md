@@ -68,6 +68,6 @@ A User Friendly Package
 
 Within the package you find a shiny application that demonstrate what the package does.
 
-NB: You can visit the following link to discover package functionalities.
+You can visit the following link to discover package functionalities.
 
 [Shiny application for the package](https://imenbouzidi.shinyapps.io/InterfaceForThepackage/)

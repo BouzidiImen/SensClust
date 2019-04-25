@@ -3,7 +3,7 @@ Type: Package
 Title: Clustering package
 Version: 0.1.0
 Author: Bouzidi Imen <bouzidi.imenn@gmail.com>
-Maintainer: The package maintainer <bouzidi.imenn@gmail.com>
+Maintainer: Package maintainer <bouzidi.imenn@gmail.com>
 Description: Its functionality includes exploratory data analysis, 
    data segmentation and data visualization.It is designed to handle 
    realistic data sets : hedonic data set and sensory data set.
@@ -22,8 +22,7 @@ Depends:
     R (>= 3.1)
 Imports: 
     FactoMineR,
-    factoextra,
-    cluster,
+    factoextra,cluster,
     clValid,
     kohonen,
     fields
