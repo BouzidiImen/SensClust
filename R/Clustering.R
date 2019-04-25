@@ -27,18 +27,17 @@ Clustering=function(Y,ClustMeth='Hierarchical',k=3,Sotadismethod='euclidean',Pdi
                     Graph=T,VarCart=F,IndCart=F,ElbowP=F ){
 repPCA=function(class,Y){
 
-  classif=cbind.data.frame(class,Y)
+      classif=cbind.data.frame(class,Y)
 
-  res.pca=PCA(classif,quali.sup =1,graph = F )
-  p=fviz_pca_var(res.pca, col.var = "cos2",
+      res.pca=PCA(classif,quali.sup =1,graph = F )
+      p=fviz_pca_var(res.pca, col.var = "cos2",
                  gradient.cols ="jco",
-                 repel = TRUE # Evite le chevauchement de texte
-  )
-  p2=fviz_pca_ind(res.pca,
-                  geom.ind = "point", # Montre les points seulement (mais pas le "text")
+                 repel = T )
+      p2=fviz_pca_ind(res.pca,
+                  geom.ind = "point",
                   col.ind = classif$class, # colorer by groups
                   palette = 'jco',
-                  addEllipses = TRUE, # Ellipses de concentration
+                  addEllipses = T,
                   legend.title = "Groups")
   return(list(graphvar=p,graphind=p2))
 }
@@ -49,20 +48,14 @@ if(ClustMeth=='Hierarchical'||ClustMeth=='Diana'||ClustMeth=='Kmeans'||ClustMeth
 switch (ClustMeth,
         Hierarchical = {
     if (Hdismethod=='euclidean'||Hdismethod=='aitchison'||Hdismethod=='maximum'||Hdismethod=='manhattan'||
-        Hdismethod=='canberra'||Hdismethod=='minkowski'||Hdismethod=='binary') {
-      d=dist(Y,method = Hdismethod)
+        Hdismethod=='canberra'||Hdismethod=='minkowski'||Hdismethod=='binary') d=dist(Y,method = Hdismethod)
+    else stop('type must be "aitchison", "euclidean", "maximum", "manhattan", "canberra","binary" or "minkowski"')
 
-    } else {
-      stop('type must be "aitchison", "euclidean", "maximum", "manhattan", "canberra","binary" or "minkowski"')
-    }
     if(Hmethod=="single"||Hmethod=="complete"||Hmethod=="average"||
        Hmethod=="mcquitty"||Hmethod=="ward.D"
-       ||Hmethod=="ward.D2"||Hmethod=="centroid" ||Hmethod=="median")
-    {
-      hc=hclust(d,method = Hmethod)
-    }else {
-      stop('type must be "single", "complete", "average", "mcquitty", "ward.D", "ward.D2", "centroid" or "median"')
-    }
+       ||Hmethod=="ward.D2"||Hmethod=="centroid" ||Hmethod=="median") hc=hclust(d,method = Hmethod)
+    else stop('type must be "single", "complete", "average", "mcquitty", "ward.D", "ward.D2", "centroid" or "median"')
+
   classes=cutree(hc,k=k)
   class=as.factor(classes)
   #C=catdes(hedo.class,num.var = 1)
@@ -71,20 +64,19 @@ switch (ClustMeth,
                       k_colors = "jco",rect = TRUE, # Add rectangle around groups
                       rect_border = 'jco', rect_fill =F)
 
-  if(Graph==T){show(dend_plot)}
+  if(Graph==T) show(dend_plot)
   res=repPCA(class,Y)
   p=res$graphvar
-  if(VarCart==T){show(p)}
+  if(VarCart==T) show(p)
   p2=res$graphind
-  if(IndCart==T){ show(p2)}
+  if(IndCart==T) show(p2)
   p3=fviz_nbclust(Y, hcut, method = "wss") +
     geom_vline(xintercept = 4, linetype = 2)+
     labs(subtitle = "Elbow method")
   if(ElbowP) show(p3)
 
   return(list(Distance=d,Hclust=hc,dendrogram=dend_plot,Pvar=p,Pind=p2,ElbowP=p3))
-
-        },
+  },
   #############DIANA##############
   Diana={
 
@@ -94,69 +86,65 @@ switch (ClustMeth,
                                 k_colors = "jco",rect = TRUE, # Add rectangle around groups
                                 rect_border = 'jco', rect_fill = F)
 
-            if(Graph){show(dend_plot)}
+            if(Graph) show(dend_plot)
             classes=cutree(D,k=k)
             class=as.factor(classes)
             res=repPCA(class,Y)
             p=res$graphvar
-            if(VarCart){show(p)}
+            if(VarCart) show(p)
             p2=res$graphind
-            if(IndCart){ show(p2)}
+            if(IndCart) show(p2)
 
 
             return(list(Dianaclust=D,dendro= dend_plot,Pvar=p,Pind=p2))
   },
   ################Kmeans########################
   Kmeans={
-      km.res1 <- kmeans(Y#,centers = integer : a fixer par l'utilisateur
-                        , k)
+      km.res1 <- kmeans(Y,k)
       f=fviz_cluster(list(data = Y, cluster = km.res1$cluster),
                      ellipse.type = "norm", geom = "point", stand = FALSE, palette = "jco",
                      ggtheme = theme_classic())
-      if(Graph){
-        show(f)
-      }
+      if(Graph) show(f)
       class=as.factor(km.res1$cluster)
       res=repPCA(class,Y)
       p=res$graphvar
-      if(VarCart==T){show(p)}
+      if(VarCart==T) show(p)
       p2=res$graphind
-      if(IndCart==T){ show(p2)}
+      if(IndCart==T) show(p2)
       return(list(Km=km.res1,graph=f,IndCart=p2,VarCart=p))
 
   }
   ##################CLARA##############
   ,Clara={
 
-      if (Cdismethod=='euclidean'||Cdismethod=='manhattan'||Cdismethod=="jaccard") {cl=clara(Y,k,metric = Cdismethod)} #it's recomended to fix samples(default=5)
-      else {stop('Type must be "euclidean","manhattan" or "jaccard"')
-      }
+      if (Cdismethod=='euclidean'||Cdismethod=='manhattan'||Cdismethod=="jaccard") cl=clara(Y,k,metric = Cdismethod) #it's recomended to fix samples(default=5)
+      else stop('Type must be "euclidean","manhattan" or "jaccard"')
       f=fviz_cluster(cl,palette ="jco",# color paletteellipse.type ="t",# Concentration
-                     ellipsegeom ="point",pointsize =1,ggth=theme_classic())
-      if(Graph==T){show(f)}
+                     ellipsegeom ="point",pointsize =1,ggtheme=theme_classic())
+      if(Graph==T) show(f)
       class=as.factor(cl$clustering)
       res=repPCA(class,Y)
       p=res$graphvar
-      if(VarCart==T){show(p)}
+      if(VarCart==T) show(p)
       p2=res$graphind
-      if(IndCart==T){ show(p2)}
+      if(IndCart==T) show(p2)
       return(list(Claracl=cl,Graph=f,IndCart=p2,VarCart=p))
   },
   #################PAM#############
   #pam may need too much memory or too much computation time since both are O(n^2). Then, clara() is preferable, see its documentation.
   Pam={
-      if (Pdismethod=='euclidean'||Pdismethod=='manhattan') {p=pam(Y,k,metric = Pdismethod)} #it's recomended to fix samples(default=5)
-      else {stop('Type must be "euclidean"or "manhattan"')
-      }
+      if (Pdismethod=='euclidean'||Pdismethod=='manhattan') p=pam(Y,k,metric = Pdismethod) #it's recomended to fix samples(default=5)
+      else stop('Type must be "euclidean"or "manhattan"')
+
       f=fviz_cluster(p,palette ="jco",# color paletteellipse.type ="t",# Concentration
-                     ellipsegeom ="point",pointsize =1,ggth=theme_classic())
-      if(Graph==T){show(f)}
+                     ellipsegeom ="point",pointsize =1,ggtheme=theme_classic())
+      if(Graph==T) show(f)
       class=as.factor(p$clustering)
       res=repPCA(class,Y)
       p=res$graphvar
-      if(VarCart==T){show(p)}
+      if(VarCart==T) show(p)
       p2=res$graphind
-      if(IndCart==T){ show(p2)}
+      if(IndCart==T) show(p2)
       return(list(Pamcl=p,Graph=f,IndCart=p2,VarCart=p))
 
 
@@ -169,9 +157,9 @@ switch (ClustMeth,
       class=as.factor(s$clust)
       res=repPCA(class,Y)
       p=res$graphvar
-      if(VarCart==T){show(p)}
+      if(VarCart==T) show(p)
       p2=res$graphind
-      if(IndCart==T){ show(p2)}
+      if(IndCart==T) show(p2)
       return(list(sotaCl=s,IndCart=p2,VarCart=p))
 
   },
@@ -181,9 +169,9 @@ switch (ClustMeth,
       class=as.factor(s$unit.classif)
       res=repPCA(class,Y)
       f=res$graphvar
-      if(VarCart){show(p)}
+      if(VarCart) show(p)
       p2=res$graphind
-      if(IndCart){ show(p2)}
+      if(IndCart) show(p2)
       return(list(SomCl=s,Graph=f,IndCart=p2,VarCart=p))
 
     }

@@ -4,21 +4,22 @@ shinyUI(dashboardPage(
 
 
       dashboardHeader(title = 'Sensory Analysis'),
-  ##################
+  ########## sider panel ####
   dashboardSidebar( width = 250,
     sidebarMenu(
     menuItem("Input Datasets", tabName = "Home", icon = icon("window-restore")),
 
 
     menuItem("Clustering", tabName = "CLus", icon = icon("connectdevelop"),
-             startExpanded = TRUE,
+             startExpanded = T,
              menuSubItem("Partitional Clustering", tabName = "PCLus", icon = icon("boxes")),
              menuSubItem("Hierarchical Clustering", tabName = "HCLus", icon = icon("megaport"))
              ),
-    menuItem("Clustering's Validation", tabName = "ClV", icon = icon("check-square"), startExpanded = FALSE
-            ),
-    menuItem("External preference mapping", tabName = "EPM", icon = icon("slideshare")),
-    menuItem("About", tabName = "Home", icon = icon("info-circle"))
+    menuItem("Clustering's Validation", tabName = "ClV", icon = icon("check-square"), startExpanded = F
+            )
+    #,
+    #menuItem("External preference mapping", tabName = "EPM", icon = icon("slideshare")),
+    #menuItem("About", tabName = "Home", icon = icon("info-circle"))
 
 
   )),
@@ -26,7 +27,7 @@ shinyUI(dashboardPage(
 
 
   shinyDashboardThemes( ### changing theme
-     theme ='poor_mans_flatly'#"purple_gradient"
+     theme ='poor_mans_flatly'
     ),
   tabItems(
   ########## Home ######
@@ -35,18 +36,26 @@ shinyUI(dashboardPage(
       fluidRow(
         column(
           width=12,
-          box( title = " Hedonic data's inputs",status = "primary", solidHeader = TRUE,
-               collapsible = TRUE,
-               fileInput("file","Upload the file", multiple = TRUE),
+          box( title = " Hedonic data's inputs",status = "primary", solidHeader = T,
+               collapsible = T,
+               fileInput("file","Upload the file in csv", accept = ".csv", multiple = F),
+                tags$head(tags$style("#msg1{color: red;
+                                 font-size: 17px;}
+                                     #msg2{color: red;
+                                 font-size: 17px;}
+                                     ")),
+               textOutput('msg1'),
                helpText("Default max. file size is 5MB"),
-               checkboxInput(inputId = 'header', label = 'Header', value = TRUE),
+               checkboxInput(inputId = 'header', label = 'Header', value = T),
                radioButtons(inputId = 'sep', label = 'Separator',
                             choices = c(Semicolon=';',Comma=',',Tab='\t', Space=''), selected = ';')),
-          box( title = " Sensory data's inputs",status = "primary", solidHeader = TRUE,
-               collapsible = TRUE,
-               fileInput("fileS","Upload the file", multiple = TRUE), # fileinput() function is used to get the file upload contorl option
+          box( title = " Sensory data's inputs",status = "primary", solidHeader = T,
+               collapsible = T,
+               fileInput("fileS","Upload the file in csv",accept = ".csv", multiple = F),
+               # fileinput() function is used to get the file upload contorl option
+               textOutput('msg2'),
                helpText("Default max. file size is 5MB"),
-               checkboxInput(inputId = 'headerS', label = 'Header', value = TRUE),
+               checkboxInput(inputId = 'headerS', label = 'Header', value = T),
                radioButtons(inputId = 'sepS', label = 'Separator',
                             choices = c(Semicolon=';',Comma=',',Tab='\t', Space=''), selected = ';'))
 
@@ -57,16 +66,16 @@ shinyUI(dashboardPage(
 
         column(
           width=12,
-          box(title = "Basic statistics: Hedonic data ",status = "primary", solidHeader = TRUE,
-              collapsible = TRUE,uiOutput('tb')),
+          box(title = "Basic statistics: Hedonic data ",status = "primary", solidHeader = T,
+              collapsible = T,uiOutput('tb')),
 
 
-          box(title = "Basic statistics: Sensory data",status = "primary", solidHeader = TRUE,
-              collapsible = TRUE,uiOutput('tb2'))
+          box(title = "Basic statistics: Sensory data",status = "primary", solidHeader = T,
+              collapsible = T,uiOutput('tb2'))
         )
       )
     ),
-  ######## Partional clustering ########
+  ########## Partional clustering ########
   tabItem(
     tabName = "PCLus",
     fluidRow(
@@ -175,7 +184,7 @@ shinyUI(dashboardPage(
 
 
     ),
-  ###################Hier clust #####################
+  ########## Hier clust #####################
   tabItem(
     tabName = "HCLus",
     fluidRow(
@@ -265,8 +274,47 @@ shinyUI(dashboardPage(
 
 
 
-  )
-  ##############EPM #####################
+  ),
+
+  ########## Cluster validation ##################
+  tabItem(
+    tabName = "ClV",
+    fluidRow(
+
+
+
+
+      box( title = "Choice validation of the clustering method",status = "primary", solidHeader = T,
+           collapsible = F,  width = 4  ,
+           selectInput('MethodCLV', 'Choose the method of clustering:',multiple = T,
+                       choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"),
+                       selected='hierarchical'),
+
+             selectInput("MetCLV", "Clustering validation measures",
+                         c("internal","stability"),selected = 'internal'),
+           numericInput("min", "Input minimum number of cluster to evaluate", 2, min = 2, max = 9),
+           numericInput("max", "Input mmaximum number of clusterto evaluate:", 10, min = 10, max = 20)
+
+      ), box( status = "primary",  width = 8 ,
+              tabsetPanel(
+                selected = "Summary",
+             tabPanel("Summary",br(),verbatimTextOutput('sumval')),
+             tabPanel("Optimal Scores",br(),DT::dataTableOutput("optsc"))
+           ))
+
+
+      ),
+    fluidRow(
+      infoBoxOutput("progressBox",width = 6)
+    )
+      )
+    )
+
+
+
+        )
+
+  ########## EPM #####################
 
   )
 
@@ -276,4 +324,3 @@ shinyUI(dashboardPage(
 
 
 
-))

@@ -3,6 +3,7 @@
 #' @import plotly
 #' @import shinydashboard
 #' @import dashboardthemes
+#' @import clValid
 #' @export
 ClustShiny <- function() {
   appDir <- system.file("shiny-function", "myapp", package = "ClusteringR")

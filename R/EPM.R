@@ -22,7 +22,7 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
 
   PCAm=function(X){
     X = aggregate(X[,4:26], list(X$produit), mean,na.rm=T)
-    respca=PCA(X[,2:24],graph = FALSE)
+    respca=PCA(X,graph = FALSE)
     respca$ind
     Dim1=respca$ind$coord[,1]
     Dim2=respca$ind$coord[,2]
@@ -74,40 +74,40 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
   res.reg=Regression.lm(Y,Dim1,Dim2,ModelType)
   statistic.values=function(res.reg,statistic.Value.Type='rsquared'){
     switch (statistic.Value.Type,
-            rsquared= {A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$r.squared))}, #Extract the rsquared of every regression
-            fstatistic={A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$fstatictic[1]))},
-            AIC={A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$extractAIC[2]))},
+            rsquared= {
+              A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$r.squared))
+              }, #Extract the rsquared of every regression
+            fstatistic={
+              A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$fstatictic[1]))
+              },
+            AIC={
+              A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$extractAIC[2]))
+              },
             stop("type must be 'rsquared' , 'fstatistic' or 'AIC'" )
     )
 
     return(list(A))
   }
 
-  img = as.image(Z=rowMeans(res.reg$Prediction)*100,x=DiSp, ncol = nbpoints,nrow = nbpoints)
-  p=plot_ly(x=img$x,y=img$y,z=img$z,type='contour', contours = list(showlabels = TRUE)) %>%
+  imgpref  = as.image(Z=rowMeans(res.reg$Preference)*100,x=DiSp,ncol = nbpoints,nrow = nbpoints)
+  imgpred= as.image(Z=rowMeans(res.reg$Prediction),x=DiSp,ncol = nbpoints,nrow = nbpoints)
+  p=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='')%>%
     layout(title = "Prediction scores of one consumer")
-  if(Graphpred){
 
-    show(p)
-
-  }
-
-  img = as.image(Z=rowMeans(res.reg$Preference)*100,x=DiSp,ncol = nbpoints,nrow = nbpoints)
-  image.plot(img)
-  pc=plot_ly(x=img$x,y=img$y,z=img$z,type='contour', contours = list(showlabels = TRUE)) %>%
+  pc=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='contour', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='')%>%
     layout(title = "Preferences of one consumer")
 
-  if(Graph2D){show(p)}
-
-  img = as.image(Z=rowMeans(res.reg$Preference)*100,x=DiSp,ncol = nbpoints,nrow = nbpoints)
-  p3d=plot_ly(x=img$x,y=img$y,z=img$z,type='surface', contours = list(showlabels = TRUE)) %>%
+  p3d=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='surface', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='')%>%
     layout(title = "External Preference Map in 3D")
 
-  if(Graph3D){show(p3d)}
+  if(Graphpred) show(p)
+  if(Graph2D) show(pc)
+  if(Graph3D) show(p3d)
 
 
-  return(list(Gpredc=p,Gpref=pc,G3D=p3d,PCA=PCAm(X),Regression=Regression.lm(Y,Dim1,Dim2,ModelType),Statistic.values=statistic.values(res.reg,statistic.Value.Type)))
+  return(list(Gpredc=p,Gpref=pc,G3D=p3d,PCA=PCAm(X),Regression=Regression.lm(Y,Dim1,Dim2,ModelType),
+              Statistic.values=statistic.values(res.reg,statistic.Value.Type)))
 }

@@ -1,47 +1,63 @@
 
 
 shinyServer(function(input, output) {
-############### Hedonic Data #############
+############ Hedonic Data #############
   hedo <- reactive({
-    if(is.null(input$file)){return()}
-    read.table(file=input$file$datapath,sep=input$sep, header = input$header,row.names = 1)
+    if(is.null(input$file)) return()
+    else{
+          if (tolower(tools::file_ext(input$file$datapath)) != "csv") return()
+          else read.table(file=input$file$datapath,sep=input$sep, header = input$header,row.names = 1)}
 
   })
-
+  output$msg1<-renderText({
+    if(is.null(input$file)) return(NULL)
+    else{
+      if (tolower(tools::file_ext(input$file$datapath)) != "csv") return( "Please upload a csv file")
+      else return(NULL) }
+  })
   output$table <- DT::renderDataTable({
-    if(is.null(hedo())){return ()}
+    if(is.null(hedo())) return ()
     DT::datatable(hedo(),options = list(scrollX = TRUE))
     })
   output$sum <-renderPrint({
-    if(is.null(hedo())){return ()}
+    if(is.null(hedo())) return ()
     summary(hedo())
   })
   output$tb <- renderUI({
-    if(is.null(hedo())){return ()}
+    if(is.null(hedo())) return ()
     else
       tabsetPanel(
         tabPanel("Dataset", br(),DT::dataTableOutput("table")),
         tabPanel("Summary",br(), verbatimTextOutput("sum"))
         )
-    }
-     )
+    })
 
-############Sensory data ##############
+############ Sensory data ##############
   senso <- reactive({
-    if(is.null(input$fileS)){return()}
-    read.table(file=input$fileS$datapath,sep=input$sepS, header = input$headerS)
+    if(is.null(input$fileS)) return()
+
+    else{
+      if (tolower(tools::file_ext(input$fileS$datapath)) != "csv") return()
+      else read.table(file=input$fileS$datapath,sep=input$sepS, header = input$headerS)}
   })
+  output$msg2<-renderText({
+    if(is.null(input$fileS)) return(NULL)
+    else{
+      if (tolower(tools::file_ext(input$fileS$datapath)) != "csv") return("Please upload a csv file")
+      else return(NULL) }
+  })
+
 output$table2 <- DT::renderDataTable({
-  if(is.null(senso())){return ()}
+  if(is.null(senso())) return ()
   DT::datatable(senso(),options = list(scrollX = TRUE))
   })
 
 output$sum2 <-renderPrint({
-  if(is.null(senso())){return ()}
+  if(is.null(senso())) return ()
   summary(senso())
 })
 output$tb2 <- renderUI({
-  if(is.null(senso())){return ()}
+  if(is.null(senso())) return ()
   else
     tabsetPanel(
 
@@ -50,13 +66,13 @@ output$tb2 <- renderUI({
       tabPanel("Summary",br(),verbatimTextOutput("sum2"))) })
 
 
-##################Pclust##################
-###########kmeans############
+############ Pclust ##################
+############ kmeans ############
 K=reactive({
   if(is.null(hedo())) return ()
-  K=Clustering(t(hedo()),ClustMeth = 'Kmeans',k=input$clusts,Graph = F,VarCart = F,IndCart = F)
+ return(Clustering(t(hedo()),ClustMeth = 'Kmeans',k=input$clusts,Graph = F,VarCart = F,IndCart = F))
 
-  return(K)
+
 })
 output$gk=renderPlot({
   K()$graph
@@ -102,11 +118,10 @@ output$down2 <- downloadHandler(
   }
 )
 
-############Clara ############
+############ Clara ############
 C=reactive({
-  if(is.null(hedo())){return()}
-  C=Clustering(t(hedo()),ClustMeth = 'Clara',Cdismethod = input$MetC,k=input$clusts,Graph = F,VarCart = F,IndCart = F)
-  return(C)
+  if(is.null(hedo())) return()
+  return(Clustering(t(hedo()),ClustMeth = 'Clara',Cdismethod = input$MetC,k=input$clusts,Graph = F,VarCart = F,IndCart = F))
 })
 output$gc=renderPlot({
   C()$Graph
@@ -150,12 +165,10 @@ output$down5 <- downloadHandler(
     dev.off()  # turn the device off
   }
 )
-################PAM#############
+############ PAM #############
 P=reactive({
   if(is.null(hedo()))return ()
-  P=Clustering(t(hedo()),ClustMeth = 'Pam',Pdismethod =input$MetPa ,k=input$clusts,Graph = F,VarCart = F,IndCart = F)
-
-  return(P)
+  return(Clustering(t(hedo()),ClustMeth = 'Pam',Pdismethod =input$MetPa ,k=input$clusts,Graph = F,VarCart = F,IndCart = F))
 })
 output$gp=renderPlot({
   P()$Graph
@@ -200,16 +213,10 @@ output$down8 <- downloadHandler(
   }
 )
 
-
-
-
-
-###############Sota ##################
+############ Sota ##################
 S=reactive({
   if(is.null(hedo())){return ()}
-  S=Clustering(t(hedo()),ClustMeth = 'Sota',Sotadismethod =input$MetSo ,k=input$clusts,Graph = F,VarCart = F,IndCart = F)
-
-  return(S)
+  return(Clustering(t(hedo()),ClustMeth = 'Sota',Sotadismethod =input$MetSo ,k=input$clusts,Graph = F,VarCart = F,IndCart = F))
 })
 output$gS=renderPlot({
   plot(S()$sotaCl)
@@ -218,11 +225,10 @@ output$down15 <- downloadHandler(
   filename =  function() {
     paste("clustersSota.pdf")
   },
-  # content is a function with argument file. content writes the plot to the device
   content = function(file) {
-    pdf(file) # open the pdf device
+    pdf(file)
     print(plot(S()$sotaCl))
-    dev.off()  # turn the device off
+    dev.off()
   }
 )
 output$vS=renderPlot({
@@ -260,11 +266,10 @@ output$down17 <- downloadHandler(
 
 
 
-###############SOM ##################
+############ SOM ##################
 SOM=reactive({
-  if(is.null(hedo())){return ()}
-  SOM=Clustering(t(hedo()),ClustMeth = 'Som',k=input$clusts,Graph = F,VarCart = F,IndCart = F)
-  return(SOM)
+  if(is.null(hedo())) return ()
+  return(Clustering(t(hedo()),ClustMeth = 'Som',k=input$clusts,Graph = F,VarCart = F,IndCart = F))
 })
 output$gSom=renderPlot({
   co2<-c("#FFFFCC","#C7E9B4","#7FCDBB","#40B6C4","#2C7FB8" ,"#253494")
@@ -317,13 +322,12 @@ output$downSO3<- downloadHandler(
 
 
 
-################Hclustering#################
+############ Hclustering #################
 
-#############hierch##########
+############ Hierch ##########
 H=reactive({
-  if(is.null(hedo())){return()}
-  H=Clustering(t(hedo()),ClustMeth='Hierarchical',k=input$clustsH,Hdismethod=input$MetH,Hmethod=input$MetricH,Graph=F,VarCart=F,IndCart=F,ElbowP=F )
-  return(H)
+  if(is.null(hedo())) return()
+  return(Clustering(t(hedo()),ClustMeth='Hierarchical',k=input$clustsH,Hdismethod=input$MetH,Hmethod=input$MetricH,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
 })
 output$dh=renderPlot({
 
@@ -401,12 +405,10 @@ output$down111 <- downloadHandler(
 )
 
 
-############Dina#####################
+############ Dina #####################
 D=reactive({
-  if(is.null(hedo())){return()}
-  D=Clustering(t(hedo()),ClustMeth='Diana',k=input$clustsH,Ddismethod = input$MetD,Graph=F,VarCart=F,IndCart=F,ElbowP=F )
-
-  return(D)
+  if(is.null(hedo())) return()
+  return(Clustering(t(hedo()),ClustMeth='Diana',k=input$clustsH,Ddismethod = input$MetD,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
 })
 output$dd=renderPlot({
   withProgress(message = 'Making plot', value = 0.1, {
@@ -466,6 +468,34 @@ output$down14 <- downloadHandler(
     dev.off()  # turn the device off
   }
 )
+
+
+
+
+
+############ CLvalid ############
+validation <- reactive({
+  if(is.null(hedo())) return ()
+  return(clValid( t(hedo()),input$min:input$max,clMethods =input$MethodCLV ,validation = input$MetCLV))
+
+})
+output$sumval <-renderPrint({
+  if(is.null(hedo())) return ()
+  summary(validation())
+})
+output$optsc <- DT::renderDataTable({
+  if(is.null(hedo())) return ()
+  DT::datatable(optimalScores(validation()),options = list(scrollX = TRUE))
+})
+
+output$progressBox <- renderInfoBox({
+  if(is.null(validation())) infoBox('',paste0('Waiting for inputing the dataset'),icon = icon("window-close"),
+                                    color = "black",fill = T)
+  else infoBox(paste0('Best Method is ',as.character(optimalScores(validation())[1,2])),
+  paste0('number of optimal clusters is ',as.character(optimalScores(validation())[1,3])),
+  icon = icon("check-square"),
+    color = "black",fill = T)
+})
 
 
 
