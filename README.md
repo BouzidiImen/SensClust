@@ -12,7 +12,10 @@ Finally, a graphical user interface is implemented with R shiny in order to prop
 Installation
 ------------
 
-It is not released on cran yet
+``` r
+# install.packages("devtools")
+devtools::install_github("BouzidiImen/ClusteringR")
+```
 
 A User Friendly Package
 -----------------------
