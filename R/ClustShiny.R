@@ -6,7 +6,7 @@
 #' @import clValid
 #' @export
 ClustShiny <- function() {
-  appDir <- system.file("shiny-function", "myapp", package = "ClusteringR")
+  appDir <- system.file("shiny-function", package = "ClusteringR")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `ClusteringR`.", call. = FALSE)
   }
