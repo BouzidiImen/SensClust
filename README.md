@@ -1,19 +1,24 @@
-# ClusteringR
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+ClusteringR
+===========
 
 <!-- badges: start -->
 <!-- badges: end -->
+Its functionality includes exploratory data analysis, data segmentation and data visualization.It is designed to handle realistic data sets : hedonic data set and sensory data set. It makes use of several clustering methods as well as the implementation of partition-validity approach.
 
-Its functionality includes exploratory data analysis, 
-   data segmentation and data visualization.It is designed to handle 
-   realistic data sets : hedonic data set and sensory data set.
-   It makes use of several clustering methods as well as the
-   implementation of partition-validity approach.
-   Finally, a graphical user interface is implemented  with R shiny in order to propose a user friendly package.
+Finally, a graphical user interface is implemented with R shiny in order to propose a user friendly package.
 
+Installation
+------------
 
-## Installation
+It is not released on cran yet
 
-IT is not released on cran.
+A User Friendly Package
+-----------------------
 
+Within the package you find a shiny application that demonstrate what the package does.
 
+NB: You can visit the following link to discover the application.
 
+<https://imenbouzidi.shinyapps.io/InterfaceForThepackage/>
