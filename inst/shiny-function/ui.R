@@ -26,9 +26,9 @@ shinyUI(dashboardPage(
   dashboardBody(
 
 
-    shinyDashboardThemes( ### changing theme
-      theme ='poor_mans_flatly'
-    ),
+    #shinyDashboardThemes( ### changing theme
+      #theme ='poor_mans_flatly'
+    #),
     tabItems(
       ########## Home ######
       tabItem(

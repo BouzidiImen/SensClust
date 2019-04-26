@@ -2,7 +2,6 @@
 #' @import shiny
 #' @import plotly
 #' @import shinydashboard
-#' @import dashboardthemes
 #' @import clValid
 #' @export
 ClustShiny <- function() {
