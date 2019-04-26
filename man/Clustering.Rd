@@ -43,3 +43,12 @@ list
 \description{
 This function serves to clustering data analysis using diverse methods and ploting diverses graphs
 }
+\examples{
+\dontrun{
+ library(ClusteringR)
+ cl=Clustering(Y=t(hedo),ClustMeth='Hierarchical',
+ k=3,Hdismethod='euclidean',Hmethod="ward.D2",
+ Graph=T,VarCart=F,IndCart=F,ElbowP=F )
+}
+
+}

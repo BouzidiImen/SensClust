@@ -21,6 +21,13 @@
 #' @import cluster
 #' @import clValid
 #' @import kohonen
+#' @examples
+#' \dontrun{
+#'  library(ClusteringR)
+#'  cl=Clustering(Y=t(hedo),ClustMeth='Hierarchical',
+#'  k=3,Hdismethod='euclidean',Hmethod="ward.D2",
+#'  Graph=T,VarCart=F,IndCart=F,ElbowP=F )
+#' }
 #'
 Clustering=function(Y,ClustMeth='Hierarchical',k=3,Sotadismethod='euclidean',Pdismethod='euclidean',Cdismethod='euclidean',Ddismethod='euclidean',Hdismethod='euclidean',Hmethod="ward.D2",
                     Graph=T,VarCart=F,IndCart=F,ElbowP=F ){
@@ -47,17 +54,17 @@ if(ClustMeth=='Hierarchical'||ClustMeth=='Diana'||ClustMeth=='Kmeans'||ClustMeth
 switch (ClustMeth,
         Hierarchical = {
     if (Hdismethod=='euclidean'||Hdismethod=='aitchison'||Hdismethod=='maximum'||Hdismethod=='manhattan'||
-        Hdismethod=='canberra'||Hdismethod=='minkowski'||Hdismethod=='binary') d=dist(Y,method = Hdismethod)
+        Hdismethod=='canberra'||Hdismethod=='minkowski'||Hdismethod=='binary') d=stats::dist(Y,method = Hdismethod)
     else stop('type must be "aitchison", "euclidean", "maximum", "manhattan", "canberra","binary" or "minkowski"')
 
     if(Hmethod=="single"||Hmethod=="complete"||Hmethod=="average"||
        Hmethod=="mcquitty"||Hmethod=="ward.D"
-       ||Hmethod=="ward.D2"||Hmethod=="centroid" ||Hmethod=="median") hc=hclust(d,method = Hmethod)
+       ||Hmethod=="ward.D2"||Hmethod=="centroid" ||Hmethod=="median") hc=stats::hclust(d,method = Hmethod)
     else stop('type must be "single", "complete", "average", "mcquitty", "ward.D", "ward.D2", "centroid" or "median"')
 
-  classes=cutree(hc,k=k)
+  classes=stats::cutree(hc,k=k)
   class=as.factor(classes)
-  dend=as.dendrogram(hc)
+  #dend=as.dendrogram(hc)
   dend_plot=fviz_dend(hc, cex = 0.5, k=k, main = "Dendrogram ", xlab = "Objects", ylab = "Distance", # Cut in four groups
                       k_colors = "jco",rect = TRUE, # Add rectangle around groups
                       rect_border = 'jco', rect_fill =F)
@@ -68,9 +75,7 @@ switch (ClustMeth,
   if(VarCart==T) show(p)
   p2=res$graphind
   if(IndCart==T) show(p2)
-  p3=fviz_nbclust(Y, hcut, method = "wss") +
-    geom_vline(xintercept = 4, linetype = 2)+
-    labs(subtitle = "Elbow method")
+  p3=fviz_nbclust(Y, hcut, method = "wss")
   if(ElbowP) show(p3)
 
   return(list(Distance=d,Hclust=hc,dendrogram=dend_plot,Pvar=p,Pind=p2,ElbowP=p3))
@@ -85,7 +90,7 @@ switch (ClustMeth,
                                 rect_border = 'jco', rect_fill = F)
 
             if(Graph) show(dend_plot)
-            classes=cutree(D,k=k)
+            classes=stats::cutree(D,k=k)
             class=as.factor(classes)
             res=repPCA(class,Y)
             p=res$graphvar
@@ -98,10 +103,9 @@ switch (ClustMeth,
   },
   ################Kmeans########################
   Kmeans={
-      km.res1 <- kmeans(Y,k)
+      km.res1 <- stats::kmeans(Y,k)
       f=fviz_cluster(list(data = Y, cluster = km.res1$cluster),
-                     ellipse.type = "norm", geom = "point", stand = FALSE, palette = "jco",
-                     ggtheme = theme_classic())
+                     ellipse.type = "norm", geom = "point", stand = FALSE, palette = "jco")
       if(Graph) show(f)
       class=as.factor(km.res1$cluster)
       res=repPCA(class,Y)
@@ -118,7 +122,7 @@ switch (ClustMeth,
       if (Cdismethod=='euclidean'||Cdismethod=='manhattan'||Cdismethod=="jaccard") cl=clara(Y,k,metric = Cdismethod) #it's recomended to fix samples(default=5)
       else stop('Type must be "euclidean","manhattan" or "jaccard"')
       f=fviz_cluster(cl,palette ="jco",# color paletteellipse.type ="t",# Concentration
-                     ellipsegeom ="point",pointsize =1,ggtheme=theme_classic())
+                     ellipsegeom ="point",pointsize =1)
       if(Graph==T) show(f)
       class=as.factor(cl$clustering)
       res=repPCA(class,Y)
@@ -135,7 +139,7 @@ switch (ClustMeth,
       else stop('Type must be "euclidean"or "manhattan"')
 
       f=fviz_cluster(p,palette ="jco",
-                     ellipsegeom ="point",pointsize =1,ggtheme=theme_classic())
+                     ellipsegeom ="point",pointsize =1)
       if(Graph==T) show(f)
       class=as.factor(p$clustering)
       res=repPCA(class,Y)

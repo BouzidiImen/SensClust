@@ -3,11 +3,11 @@ ClusteringR
 ===========
 
 <!-- badges: start -->
-<!-- badges: end -->
+[![Travis build status](https://travis-ci.org/BouzidiImen/ClusteringR.svg?branch=master)](https://travis-ci.org/BouzidiImen/ClusteringR) <!-- badges: end -->
 
-This package's functions include : exploratory data analysis, data segmentation and data visualization.It is designed to handle/treat/analyze realistic data sets : hedonic data set and sensory data set. It makes use of various clustering methods as well as the implementation of partition-validity approach.
+Its functionality includes exploratory data analysis, data segmentation and data visualization.It is designed to handle realistic data sets : hedonic data set and sensory data set. It makes use of several clustering methods as well as the implementation of partition-validity approach.
 
-Finally, a graphical user interface is established with R shiny in order to propose a user friendly package.
+Finally, a graphical user interface is implemented with R shiny in order to propose a user friendly package.
 
 Installation
 ------------

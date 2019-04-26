@@ -21,7 +21,7 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
   ###### PCA on the senso Dataset X : contains marks given by professional jugdes
 
   PCAm=function(X){
-    X = aggregate(X[,4:26], list(X$produit), mean,na.rm=T)
+    X = stats::aggregate(X[,4:26], list(X$produit), mean,na.rm=T)
     respca=PCA(X,graph = FALSE)
     respca$ind
     Dim1=respca$ind$coord[,1]
@@ -52,18 +52,18 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
     pref=matrix(0,nrow = nrow(DiSp),ncol = ncol(Y))
     regs=vector('list',ncol(Y))
     switch(ModelType,
-           Vector={model1=as.formula(paste('conso','~Dim1+Dim2'))},#Setting the formula of the model depending on the type
-           Circular={model1=as.formula(paste('conso','~Dim1+Dim2+I(Dim1*Dim1+Dim2*Dim2)'))  },
-           Quadratic={ model1=as.formula(paste('conso','~I(Dim1*Dim1)+I(Dim2*Dim2)+Dim1*Dim2'))},
-           Eliptic={model1=as.formula(paste('conso','~I(Dim1+Dim1)+I(Dim2+Dim2)')) },
+           Vector={model1=stats::as.formula(paste('conso','~Dim1+Dim2'))},#Setting the formula of the model depending on the type
+           Circular={model1=stats::as.formula(paste('conso','~Dim1+Dim2+I(Dim1*Dim1+Dim2*Dim2)'))  },
+           Quadratic={ model1=stats::as.formula(paste('conso','~I(Dim1*Dim1)+I(Dim2*Dim2)+Dim1*Dim2'))},
+           Eliptic={model1=stats::as.formula(paste('conso','~I(Dim1+Dim1)+I(Dim2+Dim2)')) },
            stop("ModelType must be 'Vector' ,'Circular','Quadratic' or 'Eliptic'")
     )
 
     for (i in 1:ncol(Y)){
       mapreg=cbind.data.frame(Y[,i],Dim1,Dim2)#CONCA Database of every consumer with the PCA two first Dim
       colnames(mapreg)[1]='conso'
-      regs[[i]]=lm(formula =model1 ,data=mapreg)
-      pred[,i]=predict(regs[[i]], newdata=DiSp)
+      regs[[i]]=stats::lm(formula =model1 ,data=mapreg)
+      pred[,i]=stats::predict(regs[[i]], newdata=DiSp)
       pref[,i]=pred[,i]>mean(Y[,i])
 
 
