@@ -20,7 +20,9 @@ devtools::install_github("BouzidiImen/ClusteringR")
 Usage
 -----
 
-Below is a quick look at how ClusteringR can help to do your sensory analysis. Many ClusteringR functions are also applicable to clustering data using diverse methods.
+Below is a quick look at how ClusteringR can help to do your sensory analysis. Diverse methods of clustering are available in the ClusteringR package :
+
+'Hierarchical','Diana','Kmeans','Clara','Pam','Sota' and 'Som'
 
 ``` r
 library(ClusteringR)
@@ -35,10 +37,6 @@ plot_grid(cl$ElbowP, cl$dendrogram, cl$Pvar, cl$Pind, hjust = 1, vjust = 1,
 
 ![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
-``` r
-ClustShiny() #run shiny application
-```
-
 Data available in the package
 -----------------------------
 
@@ -46,11 +44,10 @@ Data available in the package
 -   hedo: hedonic data from a trial of 8 biscuits by 294 customers.
 
 ``` r
-#to use 
+#Usage 
 library(ClusteringR)
-
-S=senso
-H=hedo
+S=senso # sensory data 
+H=hedo # hedonic data
 ```
 
 A User Friendly Package
@@ -58,6 +55,10 @@ A User Friendly Package
 
 Within the package you find a shiny application that demonstrate what the package does.
 
-You can visit the following link to discover package functionalities.
+``` r
+ClustShiny() #run shiny application
+```
+
+P.S.You can visit the following link to get a sneak peek on the package functionalities.
 
 [Shiny application for the package](https://imenbouzidi.shinyapps.io/InterfaceForThepackage/)
