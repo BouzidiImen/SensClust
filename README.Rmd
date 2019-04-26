@@ -10,10 +10,10 @@ output: github_document
 <!-- badges: start -->
   <!-- badges: end -->
 
-  Its functionality includes exploratory data analysis, data segmentation and data visualization.It is designed to handle realistic data sets : hedonic data set and sensory data set.
-It makes use of several clustering methods as well as the implementation of partition-validity approach.
 
-Finally, a graphical user interface is implemented  with R shiny in order to propose a user friendly package.
+ This package's functions include : exploratory data analysis, data segmentation and data visualization.It is designed to handle/treat/analyze realistic data sets : hedonic data set and sensory data set. It makes use of various clustering methods as well as the implementation of partition-validity approach.
+
+Finally, a graphical user interface is established with R shiny in order to propose a user friendly package.
 
 
 ## Installation
@@ -50,7 +50,7 @@ plot_grid(cl$ElbowP, cl$dendrogram, cl$Pvar, cl$Pind, hjust = 1, vjust = 1,
           scale = c(1, 1, 1, 1))
 
 ```
-```{r eval=FALSE}
+```{r eval=FALSE }
 help("Clustering") # to see more information about the function of clustering 
 ```
 
