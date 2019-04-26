@@ -37,6 +37,10 @@ plot_grid(cl$ElbowP, cl$dendrogram, cl$Pvar, cl$Pind, hjust = 1, vjust = 1,
 
 ![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
+``` r
+help("Clustering") # to see more information about the function of clustering 
+```
+
 Data available in the package
 -----------------------------
 

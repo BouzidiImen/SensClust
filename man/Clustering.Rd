@@ -38,8 +38,8 @@ Clustering(Y, ClustMeth = "Hierarchical", k = 3,
 \item{ElbowP}{TRUE if you want to visualize The plot of the elbow method for Hierarchical method}
 }
 \value{
-list of things
+list
 }
 \description{
-Clustering
+This function serves to clustering data analysis using diverse methods and ploting diverses graphs
 }

@@ -1,6 +1,5 @@
-
 #' Clustering
-#'
+#' @description This function serves to clustering data analysis using diverse methods and ploting diverses graphs
 #' @param Y a numeric matrix or a data frame with all numeric columns (Ex:consumers scores)
 #' @param ClustMeth Clustering method that must be 'Hierarchical','Diana','Kmeans','Clara','Pam','Sota' or 'Som'
 #' @param k integer, the number of clusters. It is required that 0<k<n where n is the number of observations (i.e., n = nrow(x))
