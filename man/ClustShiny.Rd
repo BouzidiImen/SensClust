@@ -9,3 +9,8 @@ ClustShiny()
 \description{
 Graphical representation of the package
 }
+\examples{
+\dontrun{
+ClustShiny()
+}
+}

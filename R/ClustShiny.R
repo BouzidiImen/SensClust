@@ -2,8 +2,13 @@
 #' @import shiny
 #' @import plotly
 #' @import shinydashboard
+#' @import dashboardthemes
 #' @import clValid
 #' @export
+#' @examples
+#' \dontrun{
+#' ClustShiny()
+#' }
 ClustShiny <- function() {
   appDir <- system.file("shiny-function", package = "ClusteringR")
   if (appDir == "") {
