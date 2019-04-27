@@ -9,6 +9,8 @@ Finally, a graphical user interface is implemented with R shiny in order to prop
 Installation
 ------------
 
+You can install the development version from [GitHub](https://github.com/) with:
+
 ``` r
 install.packages("devtools")
 devtools::install_github("BouzidiImen/ClusteringR")
@@ -60,6 +62,6 @@ Within the package you find a shiny application that demonstrate what the packag
 ClustShiny() #run shiny application
 ```
 
-P.S.You can visit the following link to get a sneak peek on the package functionalities.
+P.S:You can visit the following link to get a sneak peek on the package functionalities.
 
 [Shiny application for the package](https://imenbouzidi.shinyapps.io/InterfaceForThepackage/)

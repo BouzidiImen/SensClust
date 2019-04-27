@@ -1,4 +1,5 @@
 
+
 #########################EPM###################
 #' External preference mapping
 #' @description This function is dedicated for hedonic data segmentation
@@ -16,14 +17,13 @@
 #' @return PCA,Regression,Statistic.values
 #' @export
 #'
+#'
 EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE,statistic.Value.Type='rsquared'){
 
   ###### PCA on the senso Dataset X : contains marks given by professional jugdes
-
   PCAm=function(X){
-    X = stats::aggregate(X[,4:26], list(X$produit), mean,na.rm=T)
-    respca=PCA(X,graph = FALSE)
-    respca$ind
+    X = stats::aggregate(X[,4:ncol(X)], list(X[,3]), mean,na.rm=T)
+    respca=PCA(X[,2:ncol(X)],graph = FALSE)
     Dim1=respca$ind$coord[,1]
     Dim2=respca$ind$coord[,2]
     return(data.frame(Dim1,Dim2))
@@ -32,10 +32,10 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
   Dim2=PCAm(X)$Dim2
   ##### Make the discrete space
   DiscreteSpace=function(Dim1,Dim2,nbpoints=50){
-    xmin=floor(min(Dim1))
-    xmax=ceiling(max(Dim1))
-    ymin=floor(min(Dim2))
-    ymax=ceiling(max(Dim2))
+    xmin=floor(10*min(Dim1))/10
+    xmax=ceiling(10*max(Dim1))/10
+    ymin=floor(2*min(Dim2))/2
+    ymax=ceiling(2*max(Dim2))/2
     x <- seq(xmin, xmax,length.out=nbpoints)
     y <- seq(ymin, ymax,length.out=nbpoints)
     d <- expand.grid(x = x, y = y)
@@ -64,7 +64,7 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
       colnames(mapreg)[1]='conso'
       regs[[i]]=stats::lm(formula =model1 ,data=mapreg)
       pred[,i]=stats::predict(regs[[i]], newdata=DiSp)
-      pref[,i]=pred[,i]>mean(Y[,i])
+      pref[,i]=(as.numeric(pred[,i])>as.numeric(mean(Y[,i])))
 
 
       return(list(Regression=regs, Prediction=pred,Preference=pref))}
@@ -88,10 +88,12 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
 
     return(list(A))
   }
+  z=rowMeans(res.reg$Prediction)
+  p=rowMeans(res.reg$Preference)*100
+  imgpred= as.image(Z=z,x=DiSp,ncol = nbpoints,nrow = nbpoints)
+  imgpref  = as.image(Z=p,x=DiSp,ncol = nbpoints,nrow = nbpoints)
 
-  imgpref  = as.image(Z=rowMeans(res.reg$Preference)*100,x=DiSp,ncol = nbpoints,nrow = nbpoints)
-  imgpred= as.image(Z=rowMeans(res.reg$Prediction),x=DiSp,ncol = nbpoints,nrow = nbpoints)
-  p=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour', contours = list(showlabels = TRUE)) %>%
+    p=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='')%>%
     layout(title = "Prediction scores of one consumer")
 
@@ -99,15 +101,13 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
     colorbar(title ='')%>%
     layout(title = "Preferences of one consumer")
 
-  p3d=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='surface', contours = list(showlabels = TRUE)) %>%
-    colorbar(title ='')%>%
-    layout(title = "External Preference Map in 3D")
+  p3d=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='surface')
 
   if(Graphpred) show(p)
   if(Graph2D) show(pc)
   if(Graph3D) show(p3d)
 
 
-  return(list(Gpredc=p,Gpref=pc,G3D=p3d,PCA=PCAm(X),Regression=Regression.lm(Y,Dim1,Dim2,ModelType),
+  return(list(Gpredc=p,Gpref=pc,G3D=p3d,PCA=PCAm(X),pred=res.reg$Prediction,pref=res.reg$Preference,Regression=Regression.lm(Y,Dim1,Dim2,ModelType),
               Statistic.values=statistic.values(res.reg,statistic.Value.Type)))
 }
