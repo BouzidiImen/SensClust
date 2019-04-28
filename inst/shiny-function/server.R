@@ -486,17 +486,20 @@ shinyServer(function(input, output) {
   })
   output$optsc <- DT::renderDataTable({
     if(is.null(hedo())) return ()
-    DT::datatable(optimalScores(validation()),options = list(scrollX = TRUE))
+    DT::datatable(optimalScores(validation()),options = list(scrollX = TRUE,dom = 'Bfrtip',
+                                                             buttons = c('csv', 'excel')), extensions = 'Buttons')
   })
 
-  output$progressBox <- renderInfoBox({
-    if(is.null(validation())) infoBox('',paste0('Waiting for inputing the dataset'),icon = icon("window-close"),
-                                      color = "black",fill = T)
-    else infoBox(paste0('Best Method is ',as.character(optimalScores(validation())[1,2])),
-                 paste0('number of optimal clusters is ',as.character(optimalScores(validation())[1,3])),
-                 icon = icon("check-square"),
-                 color = "black",fill = T)
-  })
+  #output$progressBox <- renderInfoBox({
+   # if(is.null(validation())) infoBox('',paste0('Waiting for inputing the dataset'),icon = icon("window-close"),
+    #                                  color = "black",fill = T)
+    #else infoBox(paste0('Best Method is ',as.character(optimalScores(validation())[1,2])),
+     #            paste0('number of optimal clusters is ',as.character(optimalScores(validation())[1,3])),
+      #           icon = icon("check-square"),
+       #          color = "black",fill = T)
+  #})
+
+
 
 
 

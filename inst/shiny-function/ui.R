@@ -17,8 +17,9 @@ shinyUI(dashboardPage(
                       ),
                       menuItem("Clustering's Validation", tabName = "ClV", icon = icon("check-square"), startExpanded = F
                       )
+                      ,
+                      menuItem("External preference mapping", tabName = "EPM", icon = icon("slideshare"))
                       #,
-                      #menuItem("External preference mapping", tabName = "EPM", icon = icon("slideshare")),
                       #menuItem("About", tabName = "Home", icon = icon("info-circle"))
 
 
@@ -284,16 +285,16 @@ shinyUI(dashboardPage(
 
 
 
-          box( title = "Choice validation of the clustering method",status = "primary", solidHeader = T,
+          box( title = "Validation of the clustering method",status = "primary", solidHeader = T,
                collapsible = F,  width = 4  ,
-               selectInput('MethodCLV', 'Choose the method of clustering:',multiple = T,
+               selectInput('MethodCLV', 'Choose the methods of clustering:',multiple = T,
                            choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"),
                            selected='hierarchical'),
 
                selectInput("MetCLV", "Clustering validation measures",
                            c("internal","stability"),selected = 'internal'),
                numericInput("min", "Input minimum number of cluster to evaluate", 2, min = 2, max = 9),
-               numericInput("max", "Input mmaximum number of clusterto evaluate:", 10, min = 10, max = 20)
+               numericInput("max", "Input mmaximum number of cluster to evaluate:", 10, min = 10, max = 20)
 
           ), box( status = "primary",  width = 8 ,
                   tabsetPanel(
@@ -303,10 +304,30 @@ shinyUI(dashboardPage(
                   ))
 
 
-        ),
+        )#,
+        #fluidRow(
+         # infoBoxOutput("progressBox",width = 6)
+        #)
+      ),
+
+
+      ########## EPM #####################
+      tabItem(
+        tabName = "EPM",
         fluidRow(
-          infoBoxOutput("progressBox",width = 6)
-        )
+
+
+
+
+          box( title = "Choice the clustering method",status = "primary", solidHeader = T,
+               collapsible = F,  width = 4  ,
+               selectInput('MethodEPM', 'Choose the method of clustering:',multiple = T,
+                           choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"))
+
+          ), box( status = "primary",  width = 8 )
+
+
+        )#,
       )
       )
 
@@ -314,7 +335,9 @@ shinyUI(dashboardPage(
 
 )
 
-########## EPM #####################
+
+
+
 
   )
 
