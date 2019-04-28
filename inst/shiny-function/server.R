@@ -486,8 +486,10 @@ shinyServer(function(input, output) {
   })
   output$optsc <- DT::renderDataTable({
     if(is.null(hedo())) return ()
-    DT::datatable(optimalScores(validation()),options = list(scrollX = TRUE,dom = 'Bfrtip',
-                                                             buttons = c('csv', 'excel')), extensions = 'Buttons')
+    DT::datatable(optimalScores(validation()),options = list(scrollX = TRUE))
+  })
+  output$x3 = downloadHandler('OptimalScores.csv' , content = function(file) {
+    write.table(optimalScores(validation()), file,sep=";",row.names = F)
   })
 
   #output$progressBox <- renderInfoBox({
