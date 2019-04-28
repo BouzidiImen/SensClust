@@ -361,7 +361,7 @@ shinyServer(function(input, output) {
     }
   )
   output$vh=renderPlot({
-    H()$Pvar
+    H()$VarCart
   })
   output$down10 <- downloadHandler(
     filename =  function() {
@@ -370,12 +370,13 @@ shinyServer(function(input, output) {
     # content is a function with argument file. content writes the plot to the device
     content = function(file) {
       pdf(file) # open the pdf device
-      print(H()$Pvar)
+      print(H()$VarCart)
       dev.off()  # turn the device off
     }
   )
+
   output$ih=renderPlot({
-    H()$Pind
+    H()$IndCart
   })
   output$down11 <- downloadHandler(
     filename =  function() {
@@ -384,7 +385,7 @@ shinyServer(function(input, output) {
     # content is a function with argument file. content writes the plot to the device
     content = function(file) {
       pdf(file) # open the pdf device
-      print(H()$Pind)
+      print(H()$IndCart)
       dev.off()  # turn the device off
     }
   )
@@ -441,7 +442,7 @@ shinyServer(function(input, output) {
     }
   )
   output$vd=renderPlot({
-    D()$Pvar
+    D()$VarCart
   })
   output$down13 <- downloadHandler(
     filename =  function() {
@@ -450,12 +451,12 @@ shinyServer(function(input, output) {
     # content is a function with argument file. content writes the plot to the device
     content = function(file) {
       pdf(file) # open the pdf device
-      print(D()$Pvar)
+      print(D()$VarCart)
       dev.off()  # turn the device off
     }
   )
   output$id=renderPlot({
-    D()$Pind
+    D()$IndCart
   })
   output$down14 <- downloadHandler(
     filename =  function() {
@@ -464,7 +465,7 @@ shinyServer(function(input, output) {
     # content is a function with argument file. content writes the plot to the device
     content = function(file) {
       pdf(file) # open the pdf device
-      print( D()$Pind)
+      print( D()$IndCart)
       dev.off()  # turn the device off
     }
   )

@@ -38,17 +38,17 @@ Clustering(Y, ClustMeth = "Hierarchical", k = 3,
 \item{ElbowP}{TRUE if you want to visualize The plot of the elbow method for Hierarchical method}
 }
 \value{
-list
+SomCl,Graph,IndCart,VarCart,Hclustdendrogram=dend_plot,Pvar=p,Pind=p2,ElbowP=p3
 }
 \description{
 This function serves to clustering data analysis using diverse methods and ploting diverses graphs
 }
 \examples{
-\dontrun{
+
  library(ClusteringR)
  cl=Clustering(Y=t(hedo),ClustMeth='Hierarchical',
  k=3,Hdismethod='euclidean',Hmethod="ward.D2",
- Graph=T,VarCart=F,IndCart=F,ElbowP=F )
-}
+ Graph=FALSE,VarCart=FALSE,IndCart=FALSE,ElbowP=FALSE )
+
 
 }

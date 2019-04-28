@@ -14,43 +14,39 @@
 #' @import FactoMineR
 #' @import plotly
 #' @import fields
-#' @return PCA,Regression,Statistic.values
+#' @return pred,pref,Regression,Statistic.values,Graphpred,Graph2D,Graph3D
 #' @export
 #'
+#' @examples
+#' library(ClusteringR)
+#'
+#' E=EPM(Y=hedo,X=senso,ModelType='Quadratic',
+#' nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,
+#' Graph3D=FALSE,statistic.Value.Type='rsquared')
+#' consumer.preferences=E$pref
 #'
 EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE,statistic.Value.Type='rsquared'){
 
   ###### PCA on the senso Dataset X : contains marks given by professional jugdes
-  PCAm=function(X){
-    X = stats::aggregate(X[,4:ncol(X)], list(X[,3]), mean,na.rm=T)
-    respca=PCA(X[,2:ncol(X)],graph = FALSE)
+    S= stats::aggregate(X[,4:ncol(X)], list(X[,3]), mean,na.rm=T)
+    respca=PCA(S[,2:ncol(S)],graph = FALSE)
     Dim1=respca$ind$coord[,1]
     Dim2=respca$ind$coord[,2]
-    return(data.frame(Dim1,Dim2))
-  }
-  Dim1=PCAm(X)$Dim1
-  Dim2=PCAm(X)$Dim2
   ##### Make the discrete space
-  DiscreteSpace=function(Dim1,Dim2,nbpoints=50){
-    xmin=floor(10*min(Dim1))/10
-    xmax=ceiling(10*max(Dim1))/10
-    ymin=floor(2*min(Dim2))/2
-    ymax=ceiling(2*max(Dim2))/2
+    xmin=floor(min(Dim1))
+    xmax=ceiling(max(Dim1))
+    ymin=floor(min(Dim2))
+    ymax=ceiling(max(Dim2))
     x <- seq(xmin, xmax,length.out=nbpoints)
     y <- seq(ymin, ymax,length.out=nbpoints)
-    d <- expand.grid(x = x, y = y)
-    colnames(d)[1]='Dim1'
-    colnames(d)[2]='Dim2'
+    DiSp <- expand.grid(x = x, y = y)
+    colnames(DiSp)[1]='Dim1'
+    colnames(DiSp)[2]='Dim2'
 
-    return(d)
-
-  }
-  DiSp=DiscreteSpace(Dim1,Dim2,nbpoints)
   #####Regression of every conso with the notes of judges
-  Regression.lm = function(Y,Dim1,Dim2,ModelType){
     pred=matrix(0,nrow = nrow(DiSp),ncol = ncol(Y)) #Declaration of prediction matrix
     pref=matrix(0,nrow = nrow(DiSp),ncol = ncol(Y))
-    regs=vector('list',ncol(Y))
+    res.reg=vector('list',ncol(Y))
     switch(ModelType,
            Vector={model1=stats::as.formula(paste('conso','~Dim1+Dim2'))},#Setting the formula of the model depending on the type
            Circular={model1=stats::as.formula(paste('conso','~Dim1+Dim2+I(Dim1*Dim1+Dim2*Dim2)'))  },
@@ -62,52 +58,45 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
     for (i in 1:ncol(Y)){
       mapreg=cbind.data.frame(Y[,i],Dim1,Dim2)#CONCA Database of every consumer with the PCA two first Dim
       colnames(mapreg)[1]='conso'
-      regs[[i]]=stats::lm(formula =model1 ,data=mapreg)
-      pred[,i]=stats::predict(regs[[i]], newdata=DiSp)
-      pref[,i]=(as.numeric(pred[,i])>as.numeric(mean(Y[,i])))
+      res.reg[[i]]=stats::lm(formula =model1 ,data=mapreg)
+      pred[,i]=stats::predict(res.reg[[i]], newdata=DiSp)
+      pref[,i]=(as.numeric(pred[,i])>as.numeric(mean(Y[,i])))}
 
 
-      return(list(Regression=regs, Prediction=pred,Preference=pref))}
 
-  }
-  ###### values available are rsquared , fstatistic and AIC
-  res.reg=Regression.lm(Y,Dim1,Dim2,ModelType)
-  statistic.values=function(res.reg,statistic.Value.Type='rsquared'){
-    switch (statistic.Value.Type,
-            rsquared= {
-              A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$r.squared))
-              }, #Extract the rsquared of every regression
-            fstatistic={
-              A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$fstatictic[1]))
-              },
-            AIC={
-              A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$extractAIC[2]))
-              },
-            stop("type must be 'rsquared' , 'fstatistic' or 'AIC'" )
-    )
 
-    return(list(A))
-  }
-  z=rowMeans(res.reg$Prediction)
-  p=rowMeans(res.reg$Preference)*100
-  imgpred= as.image(Z=z,x=DiSp,ncol = nbpoints,nrow = nbpoints)
-  imgpref  = as.image(Z=p,x=DiSp,ncol = nbpoints,nrow = nbpoints)
+  z=rowMeans(pred)
+  p=rowMeans(pref)*100
+  imgpred=as.image(Z=z,x=DiSp,ncol = nbpoints,nrow = nbpoints)
+  imgpref=as.image(Z=p,x=DiSp,ncol = nbpoints,nrow = nbpoints)
 
-    p=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour', contours = list(showlabels = TRUE)) %>%
+    p1=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='')%>%
     layout(title = "Prediction scores of one consumer")
 
-  pc=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='contour', contours = list(showlabels = TRUE)) %>%
+  p2=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='contour', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='')%>%
     layout(title = "Preferences of one consumer")
 
-  p3d=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='surface')
+  p3=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='surface')
+  if(Graphpred)show(p1)
+  if(Graph2D) show(p2)
+  if(Graph3D) show(p3)
 
-  if(Graphpred) show(p)
-  if(Graph2D) show(pc)
-  if(Graph3D) show(p3d)
+
+  ###### values available are rsquared , fstatistic and AIC
+  switch (statistic.Value.Type,
+          rsquared= {
+            A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$r.squared))
+          }, #Extract the rsquared of every regression
+          fstatistic={
+            A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$fstatictic[1]))
+          },
+          AIC={
+            A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$extractAIC[2]))
+          },
+          stop("type must be 'rsquared' , 'fstatistic' or 'AIC'" ))
 
 
-  return(list(Gpredc=p,Gpref=pc,G3D=p3d,PCA=PCAm(X),pred=res.reg$Prediction,pref=res.reg$Preference,Regression=Regression.lm(Y,Dim1,Dim2,ModelType),
-              Statistic.values=statistic.values(res.reg,statistic.Value.Type)))
+  return(list(pred=pred,pref=pref,Regression=res.reg,Statistic.values=A,Graphpred=p1,Graph2D=p2,Graph3D=p3))
 }

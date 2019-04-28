@@ -25,8 +25,7 @@ devtools::install_github("BouzidiImen/ClusteringR")
 
 
 ## Usage 
-Below is a quick look at how ClusteringR can help to do your sensory analysis.
-Diverse methods of clustering are available in the ClusteringR package :
+You can find below an overall look at how ClusteringR can be useful for your sensory analysis. Diverse methods of clustering are available in the ClusteringR package :
 
 'Hierarchical','Diana','Kmeans','Clara','Pam','Sota' and 'Som'
 
@@ -45,7 +44,7 @@ cl <- Clustering(t(hedo),ClustMeth='Hierarchical',k=4,Hdismethod='euclidean',Hme
                     Graph=F,VarCart=F,IndCart=F,ElbowP=F )
 #Plot of elbow method , dendrogram , variables representation and individuals
 
-plot_grid(cl$ElbowP, cl$dendrogram, cl$Pvar, cl$Pind, hjust = 1, vjust = 1,
+plot_grid(cl$ElbowP, cl$dendrogram, cl$VarCart, cl$IndCart, hjust = 1, vjust = 1,
           scale = c(1, 1, 1, 1))
 
 ```

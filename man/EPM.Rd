@@ -26,8 +26,17 @@ EPM(Y, X, ModelType = "Quadratic", nbpoints = 50, Graphpred = FALSE,
 \item{statistic.Value.Type}{:Extract the 'rsquared' , 'fstatistic' or 'AIC' of every regression}
 }
 \value{
-PCA,Regression,Statistic.values
+pred,pref,Regression,Statistic.values,Graphpred,Graph2D,Graph3D
 }
 \description{
 This function is dedicated for hedonic data segmentation
+}
+\examples{
+library(ClusteringR)
+
+E=EPM(Y=hedo,X=senso,ModelType='Quadratic',
+nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,
+Graph3D=FALSE,statistic.Value.Type='rsquared')
+consumer.preferences=E$pref
+
 }
