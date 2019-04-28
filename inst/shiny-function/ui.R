@@ -300,7 +300,7 @@ shinyUI(dashboardPage(
                   tabsetPanel(
                     selected = "Summary",
                     tabPanel("Summary",br(),verbatimTextOutput('sumval')),
-                    tabPanel("Optimal Scores",br(),DT::dataTableOutput("optsc"), br(),downloadButton('x3', 'Download Filtered Data'))
+                    tabPanel("Optimal Scores",br(),DT::dataTableOutput("optsc"), br(),downloadButton('x3', 'Download Data'))
                   ))
 
 
