@@ -70,10 +70,9 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
   imgpred=as.image(Z=z,x=DiSp,ncol = nbpoints,nrow = nbpoints)
   imgpref=as.image(Z=p,x=DiSp,ncol = nbpoints,nrow = nbpoints)
 
-    p1=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour',colorscale = 'PRGn', contours = list(showlabels = TRUE)) %>%
+  p1=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='Score')%>%
-    layout(title = "Prediction scores of one consumer")
-
+    layout(title = "Prediction of one consumer's score ")
   p2=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='contour', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='Score')%>%
     layout(title = "Preferences of one consumer")

@@ -4,7 +4,7 @@
 \alias{Clustering}
 \title{Clustering}
 \usage{
-Clustering(Y, ClustMeth = "Hierarchical", k = 3,
+Clustering(Y, ClustMeth = "hierarchical", k = 3,
   Sotadismethod = "euclidean", Pdismethod = "euclidean",
   Cdismethod = "euclidean", Ddismethod = "euclidean",
   Hdismethod = "euclidean", Hmethod = "ward.D2", Graph = T,
@@ -13,7 +13,7 @@ Clustering(Y, ClustMeth = "Hierarchical", k = 3,
 \arguments{
 \item{Y}{a numeric matrix or a data frame with all numeric columns (Ex:consumers scores)}
 
-\item{ClustMeth}{Clustering method that must be 'Hierarchical','Diana','Kmeans','Clara','Pam','Sota' or 'Som'}
+\item{ClustMeth}{Clustering method that must be "hierarchical", "diana", "kmeans", "sota", "pam", "clara" or "som"}
 
 \item{k}{integer, the number of clusters. It is required that 0<k<n where n is the number of observations (i.e., n = nrow(x))}
 
@@ -46,9 +46,8 @@ This function serves to clustering data analysis using diverse methods and ploti
 \examples{
 
  library(ClusteringR)
- cl=Clustering(Y=t(hedo),ClustMeth='Hierarchical',
+ cl=Clustering(Y=t(hedo),ClustMeth='hierarchical',
  k=3,Hdismethod='euclidean',Hmethod="ward.D2",
  Graph=FALSE,VarCart=FALSE,IndCart=FALSE,ElbowP=FALSE )
-
 
 }

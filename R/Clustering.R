@@ -1,7 +1,7 @@
 #' Clustering
 #' @description This function serves to clustering data analysis using diverse methods and ploting diverses graphs
 #' @param Y a numeric matrix or a data frame with all numeric columns (Ex:consumers scores)
-#' @param ClustMeth Clustering method that must be 'Hierarchical','Diana','Kmeans','Clara','Pam','Sota' or 'Som'
+#' @param ClustMeth Clustering method that must be "hierarchical", "diana", "kmeans", "sota", "pam", "clara" or "som"
 #' @param k integer, the number of clusters. It is required that 0<k<n where n is the number of observations (i.e., n = nrow(x))
 #' @param Sotadismethod character string specifying the metric to be used for calculating dissimilarities between observations for Sota method.It could be "euclidean" or "correlation"
 #' @param Pdismethod  character string specifying the metric to be used for calculating dissimilarities between observations for PAM method.It could be "euclidean" or "manhattan"
@@ -24,15 +24,14 @@
 #' @examples
 #'
 #'  library(ClusteringR)
-#'  cl=Clustering(Y=t(hedo),ClustMeth='Hierarchical',
+#'  cl=Clustering(Y=t(hedo),ClustMeth='hierarchical',
 #'  k=3,Hdismethod='euclidean',Hmethod="ward.D2",
 #'  Graph=FALSE,VarCart=FALSE,IndCart=FALSE,ElbowP=FALSE )
 #'
-#'
-Clustering=function(Y,ClustMeth='Hierarchical',k=3,Sotadismethod='euclidean',Pdismethod='euclidean',Cdismethod='euclidean',Ddismethod='euclidean',Hdismethod='euclidean',Hmethod="ward.D2",
+
+Clustering=function(Y,ClustMeth='hierarchical',k=3,Sotadismethod='euclidean',Pdismethod='euclidean',Cdismethod='euclidean',Ddismethod='euclidean',Hdismethod='euclidean',Hmethod="ward.D2",
                     Graph=T,VarCart=F,IndCart=F,ElbowP=F ){
 repPCA=function(class,Y){
-
       classif=cbind.data.frame(class,Y)
 
       res.pca=PCA(classif,quali.sup =1,graph = F )
@@ -48,11 +47,12 @@ repPCA=function(class,Y){
   return(list(graphvar=p,graphind=p2))
 }
 
-if(ClustMeth=='Hierarchical'||ClustMeth=='Diana'||ClustMeth=='Kmeans'||ClustMeth=='Clara'||ClustMeth=='Pam'||
-   ClustMeth=='Sota'||ClustMeth=='Som'){
+if(ClustMeth=='hierarchical'||ClustMeth=='diana'||ClustMeth=='kmeans'||ClustMeth=='clara'||
+   ClustMeth=='pam'||
+   ClustMeth=='sota'||ClustMeth=='som'){
 ########### hierarchical ########
 switch (ClustMeth,
-        Hierarchical = {
+        hierarchical = {
     if (Hdismethod=='euclidean'||Hdismethod=='aitchison'||Hdismethod=='maximum'||Hdismethod=='manhattan'||
         Hdismethod=='canberra'||Hdismethod=='minkowski'||Hdismethod=='binary') d=stats::dist(Y,method = Hdismethod)
     else stop('type must be "aitchison", "euclidean", "maximum", "manhattan", "canberra","binary" or "minkowski"')
@@ -78,10 +78,10 @@ switch (ClustMeth,
   p3=fviz_nbclust(Y, hcut, method = "wss")
   if(ElbowP) show(p3)
 
-  return(list(Hclust=hc,dendrogram=dend_plot,VarCart=p,IndCart=p2,ElbowP=p3))
+  return(list(Hclust=hc,dendrogram=dend_plot,VarCart=p,IndCart=p2,ElbowP=p3,classes=class))
   },
   #############DIANA##############
-  Diana={
+  diana={
 
             if(Ddismethod=="euclidean" ||Ddismethod=="manhattan") D=diana(Y,metric=Ddismethod,diss=FALSE)
             else stop('type must be "euclidean" or "manhattan"')
@@ -99,10 +99,10 @@ switch (ClustMeth,
             if(IndCart) show(p2)
 
 
-            return(list(Dianaclust=D,dendro= dend_plot,VarCart=p,IndCart=p2))
+            return(list(Dianaclust=D,dendro= dend_plot,VarCart=p,IndCart=p2,classes=class))
   },
   ################Kmeans########################
-  Kmeans={
+  kmeans={
       km.res1 <- stats::kmeans(Y,k)
       f=fviz_cluster(list(data = Y, cluster = km.res1$cluster),
                      ellipse.type = "norm", geom = "point", stand = FALSE, palette = "jco")
@@ -113,11 +113,11 @@ switch (ClustMeth,
       if(VarCart==T) show(p)
       p2=res$graphind
       if(IndCart==T) show(p2)
-      return(list(Km=km.res1,graph=f,IndCart=p2,VarCart=p))
+      return(list(Km=km.res1,graph=f,IndCart=p2,VarCart=p,classes=class))
 
   }
   ##################CLARA##############
-  ,Clara={
+  ,clara={
 
       if (Cdismethod=='euclidean'||Cdismethod=='manhattan'||Cdismethod=="jaccard") cl=clara(Y,k,metric = Cdismethod) #it's recomended to fix samples(default=5)
       else stop('Type must be "euclidean","manhattan" or "jaccard"')
@@ -130,11 +130,11 @@ switch (ClustMeth,
       if(VarCart==T) show(p)
       p2=res$graphind
       if(IndCart==T) show(p2)
-      return(list(Claracl=cl,Graph=f,IndCart=p2,VarCart=p))
+      return(list(Claracl=cl,Graph=f,IndCart=p2,VarCart=p,classes=class))
   },
   #################PAM#############
   #pam may need too much memory or too much computation time since both are O(n^2). Then, clara() is preferable, see its documentation.
-  Pam={
+  pam={
       if (Pdismethod=='euclidean'||Pdismethod=='manhattan') p=pam(Y,k,metric = Pdismethod) #it's recomended to fix samples(default=5)
       else stop('Type must be "euclidean"or "manhattan"')
 
@@ -147,13 +147,13 @@ switch (ClustMeth,
       if(VarCart==T) show(p)
       p2=res$graphind
       if(IndCart==T) show(p2)
-      return(list(Pamcl=p,Graph=f,IndCart=p2,VarCart=p))
+      return(list(Pamcl=p,Graph=f,IndCart=p2,VarCart=p,classes=class))
 
 
 
   },
   ###################SOTA################
-  Sota={
+  sota={
       if(Sotadismethod=='euclidean'||Sotadismethod=='correlation') s=sota(as.matrix(Y),maxCycles=k-1,distance=Sotadismethod)
       else stop('Type must be "euclidean" or"correlation"')
       class=as.factor(s$clust)
@@ -162,10 +162,10 @@ switch (ClustMeth,
       if(VarCart==T) show(p)
       p2=res$graphind
       if(IndCart==T) show(p2)
-      return(list(sotaCl=s,IndCart=p2,VarCart=p))
+      return(list(sotaCl=s,IndCart=p2,VarCart=p,classes=class))
 
   },
-  Som={
+  som={
       s = som(Y,somgrid(k, k, "hexagonal")) # use of a cart
 
       class=as.factor(s$unit.classif)
@@ -174,7 +174,7 @@ switch (ClustMeth,
       if(VarCart) show(p)
       p2=res$graphind
       if(IndCart) show(p2)
-      return(list(SomCl=s,Graph=f,IndCart=p2,VarCart=p))
+      return(list(SomCl=s,Graph=f,IndCart=p2,VarCart=p,classes=class))
 
     }
 
@@ -184,7 +184,7 @@ switch (ClustMeth,
 
 }
 
-else stop("ClustMeth must be 'Hierarchical','Diana','Kmeans','Clara','Pam','Sota' or 'Som'")
+else stop('ClustMeth must be  "hierarchical", "diana", "kmeans", "sota", "pam", "clara" or "som"')
 
 
 

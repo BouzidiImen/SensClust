@@ -70,7 +70,7 @@ shinyServer(function(input, output) {
   ############ kmeans ############
   K=reactive({
     if(is.null(hedo())) return ()
-    return(Clustering(t(hedo()),ClustMeth = 'Kmeans',k=input$clusts,Graph = F,VarCart = F,IndCart = F))
+    return(Clustering(t(hedo()),ClustMeth ='kmeans',k=input$clusts,Graph = F,VarCart = F,IndCart = F))
 
 
   })
@@ -121,7 +121,7 @@ shinyServer(function(input, output) {
   ############ Clara ############
   C=reactive({
     if(is.null(hedo())) return()
-    return(Clustering(t(hedo()),ClustMeth = 'Clara',Cdismethod = input$MetC,k=input$clusts,Graph = F,VarCart = F,IndCart = F))
+    return(Clustering(t(hedo()),ClustMeth = 'clara',Cdismethod = input$MetC,k=input$clusts,Graph = F,VarCart = F,IndCart = F))
   })
   output$gc=renderPlot({
     C()$Graph
@@ -168,7 +168,7 @@ shinyServer(function(input, output) {
   ############ PAM #############
   P=reactive({
     if(is.null(hedo()))return ()
-    return(Clustering(t(hedo()),ClustMeth = 'Pam',Pdismethod =input$MetPa ,k=input$clusts,Graph = F,VarCart = F,IndCart = F))
+    return(Clustering(t(hedo()),ClustMeth = 'pam',Pdismethod =input$MetPa ,k=input$clusts,Graph = F,VarCart = F,IndCart = F))
   })
   output$gp=renderPlot({
     P()$Graph
@@ -216,7 +216,7 @@ shinyServer(function(input, output) {
   ############ Sota ##################
   S=reactive({
     if(is.null(hedo())){return ()}
-    return(Clustering(t(hedo()),ClustMeth = 'Sota',Sotadismethod =input$MetSo ,k=input$clusts,Graph = F,VarCart = F,IndCart = F))
+    return(Clustering(t(hedo()),ClustMeth = 'sota',Sotadismethod =input$MetSo ,k=input$clusts,Graph = F,VarCart = F,IndCart = F))
   })
   output$gS=renderPlot({
     plot(S()$sotaCl)
@@ -269,7 +269,7 @@ shinyServer(function(input, output) {
   ############ SOM ##################
   SOM=reactive({
     if(is.null(hedo())) return ()
-    return(Clustering(t(hedo()),ClustMeth = 'Som',k=input$clusts,Graph = F,VarCart = F,IndCart = F))
+    return(Clustering(t(hedo()),ClustMeth = 'som',k=input$clusts,Graph = F,VarCart = F,IndCart = F))
   })
   output$gSom=renderPlot({
     co2<-c("#FFFFCC","#C7E9B4","#7FCDBB","#40B6C4","#2C7FB8" ,"#253494")
@@ -327,7 +327,7 @@ shinyServer(function(input, output) {
   ############ Hierch ##########
   H=reactive({
     if(is.null(hedo())) return()
-    return(Clustering(t(hedo()),ClustMeth='Hierarchical',k=input$clustsH,Hdismethod=input$MetH,Hmethod=input$MetricH,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
+    return(Clustering(t(hedo()),ClustMeth='hierarchical',k=input$clustsH,Hdismethod=input$MetH,Hmethod=input$MetricH,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
   })
   output$dh=renderPlot({
 
@@ -409,7 +409,7 @@ shinyServer(function(input, output) {
   ############ Dina #####################
   D=reactive({
     if(is.null(hedo())) return()
-    return(Clustering(t(hedo()),ClustMeth='Diana',k=input$clustsH,Ddismethod = input$MetD,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
+    return(Clustering(t(hedo()),ClustMeth='diana',k=input$clustsH,Ddismethod = input$MetD,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
   })
   output$dd=renderPlot({
     withProgress(message = 'Making plot', value = 0.1, {
@@ -477,7 +477,8 @@ shinyServer(function(input, output) {
   ############ CLvalid ############
   validation <- reactive({
     if(is.null(hedo())) return ()
-    return(clValid( t(hedo()),input$min:input$max,clMethods =input$MethodCLV ,validation = input$MetCLV))
+    return(clValid( t(hedo()),input$min:input$max,clMethods =input$MethodCLV
+                    ,validation = input$MetCLV))
 
   })
   output$sumval <-renderPrint({
@@ -492,15 +493,78 @@ shinyServer(function(input, output) {
     write.table(optimalScores(validation()), file,sep=";",row.names = F)
   })
 
-  #output$progressBox <- renderInfoBox({
-   # if(is.null(validation())) infoBox('',paste0('Waiting for inputing the dataset'),icon = icon("window-close"),
-    #                                  color = "black",fill = T)
-    #else infoBox(paste0('Best Method is ',as.character(optimalScores(validation())[1,2])),
-     #            paste0('number of optimal clusters is ',as.character(optimalScores(validation())[1,3])),
-      #           icon = icon("check-square"),
-       #          color = "black",fill = T)
-  #})
+ validationchoice <- reactive({
+    if(is.null(hedo())) return ()
+    return(clValid(t(hedo()),input$min1:input$max1,
+                    clMethods =input$Methodvalid ,validation = input$MethValid))
+   })
+ methclus<- reactive({
+   #if(is.null(validationchoice())) return ()
+    #else{
+      if(input$MethValid == 'internal') {
+      switch (input$Measurei,
+              Connectivity = {
+                nbclust=as.numeric(as.character(optimalScores(validationchoice())[1,3]))
+                m=optimalScores(validationchoice())[1,2]
+              },Dunn={
+                m=optimalScores(validationchoice())[2,2]
+                nbclust=as.numeric(as.character(optimalScores(validationchoice())[2,3]))
+              },Silhouette={
+                m=optimalScores(validationchoice())[3,2]
+                nbclust=as.numeric(as.character(optimalScores(validationchoice())[3,3]))}
+      )
 
+    }
+   else{
+      switch (input$Measures,
+              APN= {
+                m=optimalScores(validationchoice())[1,2]
+                nbclust=as.numeric(as.character(optimalScores(validationchoice())[1,3]))
+              },
+              AD={
+                m=optimalScores(validationchoice())[2,2]
+              nbclust=as.numeric(as.character(optimalScores(validationchoice())[2,3]))
+              },
+             ADM={
+              m=optimalScores(validationchoice())[3,2]
+             nbclust=as.numeric(as.character(optimalScores(validationchoice())[3,3]))
+             }
+              ,FOM={
+              m=optimalScores(validationchoice())[4,2]
+              nbclust=as.numeric(as.character(optimalScores(validationchoice())[4,3]))
+              }
+     )
+
+   }
+   #}
+    return(data.frame(m,nbclust))
+
+  })
+ValidClust=reactive({
+  #if(is.null(validationchoice())) return ()
+  return(Clustering(t(hedo()),ClustMeth=as.character(methclus()$m),k=methclus()$nbclust,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
+
+})
+
+classes=reactive({
+  #if(is.null(validationchoice())) return ()
+  res=vector('list',ncol(hedo))
+  for(i in 1:methclus()$nbclust){
+
+    res[[i]]=hedo[ValidClust()$classes==i]
+
+  }
+  return(res)
+})
+
+output$msg3<-renderText({
+  #if(is.null(validationchoice())) return(NULL)
+  paste('Best Method is  ',
+  as.character(methclus()$m),
+  'and the optimal number of clusters is ',
+  as.character(methclus()$nbclust),sep=' ')
+
+})
 
 
 
@@ -511,7 +575,7 @@ shinyServer(function(input, output) {
 
   #########External preference mapping ###################
   E=reactive({
-  return(EPM(hedo(),senso(),ModelType = 'Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE))
+  return(EPM(classes()[[1]],senso(),ModelType = 'Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE))
   })
   output$pref=renderPlotly({
 

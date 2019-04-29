@@ -44,6 +44,8 @@ shinyUI(dashboardPage(
                                       font-size: 17px;}
                                       #msg2{color: red;
                                       font-size: 17px;}
+                                      #msg3{color: green;
+                                      font-size: 17px;}
                                       ")),
                  textOutput('msg1'),
                  helpText("Default max. file size is 5MB"),
@@ -291,7 +293,7 @@ shinyUI(dashboardPage(
                            choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"),
                            selected='hierarchical'),
 
-               selectInput("MetCLV", "Clustering validation measures",
+               selectInput("MetCLV", "Clustering validation measures's type",
                            c("internal","stability"),selected = 'internal'),
                numericInput("min", "Input minimum number of cluster to evaluate", 2, min = 2, max = 9),
                numericInput("max", "Input mmaximum number of cluster to evaluate:", 10, min = 10, max = 20)
@@ -319,12 +321,26 @@ shinyUI(dashboardPage(
 
 
 
-          box( title = "Choice the clustering method",status = "primary", solidHeader = T,
+          box( title = "Valide the choice of the Clustering method",status = "primary", solidHeader = T,
                collapsible = F,  width = 4  ,
-               selectInput('MethodEPM', 'Choose the method of clustering:',multiple = T,
-                           choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"))
+               selectInput('Methodvalid', 'Choose the methods of clustering to evaluate :',multiple = T,
+                choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"),
+                                              selected='hierarchical'),
+               selectInput("MethValid", "Clustering validation measures's type ",
+                                                         c("internal","stability"),selected = 'internal'),
+               conditionalPanel(
+                 condition = "input.MethValid == 'internal'",
+                 selectInput("Measurei", "Choose a measure:",c("Connectivity","Dunn","Silhouette"))),
+               conditionalPanel(
+                 condition = "input.MethValid == 'stability'",
+                 selectInput("Measures", "Choose a measure:",c("APN","AD","ADM",'FOM'))),
+               numericInput("min1", "Input minimum number of cluster ", 2, min = 2, max = 9),
+               numericInput("max1", "Input mmaximum number of cluster ", 10, min = 10, max = 20),
 
-          ), box( status = "primary",  width = 8 ,
+               textOutput('msg3')
+
+
+               ), box( status = "primary",  width = 8 ,
                   tabsetPanel(
                     selected = "Prediction Plot"
                     ,
