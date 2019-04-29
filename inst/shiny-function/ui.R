@@ -261,18 +261,18 @@ shinyUI(dashboardPage(
                           )
 
 
-                 ),
-                 tabPanel("Elbow method",
-                          conditionalPanel(
-                            condition= "input.MethodH == 'Hierarchical'",br(), plotOutput('ELH'),
-                            downloadButton(outputId = "down111", label = "Download the plot")
-                          ),
-                          conditionalPanel(
-                            condition= "input.MethodH == 'Diana'",br()
-                          )
-
-
                  )
+                 #tabPanel("Elbow method",
+                  #        conditionalPanel(
+                   #         condition= "input.MethodH == 'Hierarchical'",br(), plotOutput('ELH'),
+                    #        downloadButton(outputId = "down111", label = "Download the plot")
+                     #     ),
+                      #    conditionalPanel(
+                       #     condition= "input.MethodH == 'Diana'",br()
+                        #  )
+
+
+                 #)
                )
           )
         )

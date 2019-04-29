@@ -19,12 +19,11 @@ Depends:
     shinydashboard,
     dashboardthemes,
     shiny,
-    clValid,
+    clValid,fields,
     R (>= 3.1)
 Imports: 
     FactoMineR,
     factoextra,cluster,
-    kohonen,
-    fields
+    kohonen
 URL: https://github.com/BouzidiImen/ClusteringR
 BugReports: https://github.com/BouzidiImen/ClusteringR/issues
