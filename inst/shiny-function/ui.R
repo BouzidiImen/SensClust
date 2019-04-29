@@ -181,8 +181,8 @@ shinyUI(dashboardPage(
                           )
 
 
-                 ),
-                 tabPanel("Further Information")
+                 )#,
+                 #tabPanel("Further Information")
                ))
         )
 
