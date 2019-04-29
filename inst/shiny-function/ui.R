@@ -40,11 +40,13 @@ shinyUI(dashboardPage(
             box( title = " Hedonic data's inputs",status = "primary", solidHeader = T,
                  collapsible = T,
                  fileInput("file","Upload the file in csv", accept = ".csv", multiple = F),
-                 tags$head(tags$style("#msg1{color: red;
+                 tags$head(tags$style("#msg1{color: #8B0000;
                                       font-size: 17px;}
-                                      #msg2{color: red;
+                                      #msg2{color: #8B0000;
                                       font-size: 17px;}
-                                      #msg3{color: green;
+                                      #msg3{color: #087558;
+                                      font-size: 17px;}
+                                      #msg4{color: #0A926E;
                                       font-size: 17px;}
                                       ")),
                  textOutput('msg1'),
@@ -316,13 +318,13 @@ shinyUI(dashboardPage(
       ########## EPM #####################
       tabItem(
         tabName = "EPM",
-        fluidRow(
+        fluidRow( width=12,
 
 
 
 
-          box( title = "Valide the choice of the Clustering method",status = "primary", solidHeader = T,
-               collapsible = F,  width = 4  ,
+          box( title = "Validate the choice of the Clustering method",status = "primary", solidHeader = T,
+               collapsible = F,
                selectInput('Methodvalid', 'Choose the methods of clustering to evaluate :',multiple = T,
                 choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"),
                                               selected='hierarchical'),
@@ -337,10 +339,19 @@ shinyUI(dashboardPage(
                numericInput("min1", "Input minimum number of cluster ", 2, min = 2, max = 9),
                numericInput("max1", "Input mmaximum number of cluster ", 10, min = 10, max = 20),
 
-               textOutput('msg3')
+               textOutput('msg3'),textOutput('msg4')),
+          box(title = "Parameters for external preference mapping ",status = "primary", solidHeader = T,
+              collapsible = F,
+               #Type of regression's model
+               selectInput("mapping", "Type of regression's model for mapping",
+                           c('Quadratic','Vector' ,'Circular' , 'Eliptic'),selected = 'Quadratic'),
+              numericInput("ncl", "Input the cluster you want to visualize ", 1, min = 1, max =10)
 
 
-               ), box( status = "primary",  width = 8 ,
+
+               )),
+        fluidRow(
+                 box( status = "primary",width=12,
                   tabsetPanel(
                     selected = "Prediction Plot"
                     ,

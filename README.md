@@ -26,7 +26,7 @@ You can find below an overall look at how ClusteringR can be useful for your sen
 ``` r
 library(ClusteringR)
 # Create a clustering object  -------------------------------------------------
-cl <- Clustering(t(hedo),ClustMeth='Hierarchical',k=4,Hdismethod='euclidean',Hmethod="ward.D2",
+cl <- Clustering(t(hedo),ClustMeth='hierarchical',k=4,Hdismethod='euclidean',Hmethod="ward.D2",
                     Graph=F,VarCart=F,IndCart=F,ElbowP=F )
 #Plot of elbow method , dendrogram , variables representation and individuals
 

@@ -499,8 +499,8 @@ shinyServer(function(input, output) {
                     clMethods =input$Methodvalid ,validation = input$MethValid))
    })
  methclus<- reactive({
-   #if(is.null(validationchoice())) return ()
-    #else{
+   if(is.null(validationchoice())) return ()
+    else{
       if(input$MethValid == 'internal') {
       switch (input$Measurei,
               Connectivity = {
@@ -536,56 +536,62 @@ shinyServer(function(input, output) {
      )
 
    }
-   #}
+   }
     return(data.frame(m,nbclust))
 
   })
 ValidClust=reactive({
-  #if(is.null(validationchoice())) return ()
+  if(is.null(validationchoice())) return ()
   return(Clustering(t(hedo()),ClustMeth=as.character(methclus()$m),k=methclus()$nbclust,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
 
 })
 
-classes=reactive({
-  #if(is.null(validationchoice())) return ()
-  res=vector('list',ncol(hedo))
-  for(i in 1:methclus()$nbclust){
 
-    res[[i]]=hedo[ValidClust()$classes==i]
 
-  }
-  return(res)
-})
+
 
 output$msg3<-renderText({
-  #if(is.null(validationchoice())) return(NULL)
-  paste('Best Method is  ',
-  as.character(methclus()$m),
-  'and the optimal number of clusters is ',
-  as.character(methclus()$nbclust),sep=' ')
+  if(is.null(validationchoice())) return(NULL)
+  paste('The best method of clustering is  ',
+  as.character(methclus()$m),sep=' ')
 
+})
+output$msg4<-renderText({
+  if(is.null(validationchoice())) return(NULL)
+  paste( 'with an optimal number of clusters = ',
+        as.character(methclus()$nbclust),sep=' ')
 })
 
 
 
+classes=reactive({
+  if(is.null(validationchoice())) return ()
+res=vector('list',ncol(hedo()))
+for(i in 1:methclus()$nbclust){
 
+  res[[i]]=hedo()[ValidClust()$classes==i]
 
-
+}
+return(res)
+})
 
 
   #########External preference mapping ###################
   E=reactive({
-  return(EPM(classes()[[1]],senso(),ModelType = 'Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE))
+    if(is.null(hedo())&&is.null(senso())) return()
+    return(EPM(classes()[[input$ncl]],senso(),ModelType = input$mapping ,nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE))
   })
   output$pref=renderPlotly({
-
+    if(is.null(hedo())&&is.null(senso())) return()
     E()$Graph2D
   })
   output$map=renderPlotly({
+    if(is.null(hedo())&&is.null(senso())) return()
 
     E()$Graph3D
   })
   output$pred=renderPlotly({
+    if(is.null(hedo())&&is.null(senso())) return()
 
     E()$Graphpred
   })
