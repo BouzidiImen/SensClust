@@ -506,6 +506,25 @@ shinyServer(function(input, output) {
 
 
 
+
+
+
+  #########External preference mapping ###################
+  E=reactive({
+  return(EPM(hedo(),senso(),ModelType = 'Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE))
+  })
+  output$pref=renderPlotly({
+
+    E()$Graph2D
+  })
+  output$map=renderPlotly({
+
+    E()$Graph3D
+  })
+  output$pred=renderPlotly({
+
+    E()$Graphpred
+  })
 })
 
 

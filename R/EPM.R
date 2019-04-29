@@ -23,7 +23,7 @@
 #' E=EPM(Y=hedo,X=senso,ModelType='Quadratic',
 #' nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,
 #' Graph3D=FALSE,statistic.Value.Type='rsquared')
-#' consumer.preferences=E$pref
+#' consumer.preferences=E$prefc
 #'
 EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE,statistic.Value.Type='rsquared'){
 
@@ -70,15 +70,17 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
   imgpred=as.image(Z=z,x=DiSp,ncol = nbpoints,nrow = nbpoints)
   imgpref=as.image(Z=p,x=DiSp,ncol = nbpoints,nrow = nbpoints)
 
-    p1=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour', contours = list(showlabels = TRUE)) %>%
-    colorbar(title ='')%>%
+    p1=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour',colorscale = 'PRGn', contours = list(showlabels = TRUE)) %>%
+    colorbar(title ='Score')%>%
     layout(title = "Prediction scores of one consumer")
 
   p2=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='contour', contours = list(showlabels = TRUE)) %>%
-    colorbar(title ='')%>%
+    colorbar(title ='Score')%>%
     layout(title = "Preferences of one consumer")
 
-  p3=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='surface')
+  p3=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='surface')%>%
+    colorbar(title ='Score')%>%
+    layout(title = "Preference Map ")
   if(Graphpred)show(p1)
   if(Graph2D) show(p2)
   if(Graph3D) show(p3)

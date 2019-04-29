@@ -324,7 +324,16 @@ shinyUI(dashboardPage(
                selectInput('MethodEPM', 'Choose the method of clustering:',multiple = T,
                            choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"))
 
-          ), box( status = "primary",  width = 8 )
+          ), box( status = "primary",  width = 8 ,
+                  tabsetPanel(
+                    selected = "Prediction Plot"
+                    ,
+                    tabPanel("Prediction Plot",br(),plotlyOutput("pred")),
+                    tabPanel("Preference Plot",br(),plotlyOutput("pref"))
+                    ,
+                    tabPanel("Preference Map",br(),plotlyOutput("map"))
+
+                  ))
 
 
         )#,

@@ -37,6 +37,6 @@ library(ClusteringR)
 E=EPM(Y=hedo,X=senso,ModelType='Quadratic',
 nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,
 Graph3D=FALSE,statistic.Value.Type='rsquared')
-consumer.preferences=E$pref
+consumer.preferences=E$prefc
 
 }
