@@ -26,14 +26,14 @@ You can find below an overall look at how ClusteringR can be useful for your sen
 ``` r
 library(ClusteringR)
 # Create a clustering object  -------------------------------------------------
-cl <- Clustering(t(hedo),ClustMeth='hierarchical',k=4,Hdismethod='euclidean',Hmethod="ward.D2",
-                    Graph=F,VarCart=F,IndCart=F,ElbowP=F )
+cl <- Clustering(t(hedo),ClustMeth='hierarchical',k=3,Hdismethod='euclidean',Hmethod="ward.D2",
+                    Graph=F,VarCart=F,IndCart=F )
 # get clusters
 clusters=cl$classes
 
 #Plot of elbow method , dendrogram , variables representation and individuals
 
-plot_grid(cl$ElbowP, cl$dendrogram, cl$VarCart, cl$IndCart, hjust = 1, vjust = 1,
+plot_grid(cl$dendrogram, cl$VarCart, cl$IndCart, hjust = 1, vjust = 1,
           scale = c(1, 1, 1, 1))
 ```
 

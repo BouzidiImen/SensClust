@@ -14,7 +14,7 @@
 #' @param IndCart  TRUE if you want to visualize Distribution of consumers
 #' @param ElbowP TRUE if you want to visualize The plot of the elbow method for Hierarchical method
 #'
-#' @return SomCl,Graph,IndCart,VarCart,Hclustdendrogram=dend_plot,Pvar=p,Pind=p2,ElbowP=p3
+#' @return list
 #' @export
 #' @import FactoMineR
 #' @import factoextra
@@ -26,11 +26,11 @@
 #'  library(ClusteringR)
 #'  cl=Clustering(Y=t(hedo),ClustMeth='hierarchical',
 #'  k=3,Hdismethod='euclidean',Hmethod="ward.D2",
-#'  Graph=FALSE,VarCart=FALSE,IndCart=FALSE,ElbowP=FALSE )
+#'  Graph=FALSE,VarCart=FALSE,IndCart=FALSE)
 #'
 
 Clustering=function(Y,ClustMeth='hierarchical',k=3,Sotadismethod='euclidean',Pdismethod='euclidean',Cdismethod='euclidean',Ddismethod='euclidean',Hdismethod='euclidean',Hmethod="ward.D2",
-                    Graph=T,VarCart=F,IndCart=F,ElbowP=F ){
+                    Graph=T,VarCart=F,IndCart=F){
 
 
 repPCA=function(class,Y){
@@ -77,10 +77,9 @@ switch (ClustMeth,
   if(VarCart==T) show(p)
   p2=res$graphind
   if(IndCart==T) show(p2)
-  p3=fviz_nbclust(Y, hcut, method = "wss")
-  if(ElbowP) show(p3)
 
-  return(list(Hclust=hc,dendrogram=dend_plot,VarCart=p,IndCart=p2,ElbowP=p3,classes=class))
+
+  return(list(Hclust=hc,dendrogram=dend_plot,VarCart=p,IndCart=p2,classes=class))
   },
   #############DIANA##############
   diana={

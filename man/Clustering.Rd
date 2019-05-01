@@ -8,7 +8,7 @@ Clustering(Y, ClustMeth = "hierarchical", k = 3,
   Sotadismethod = "euclidean", Pdismethod = "euclidean",
   Cdismethod = "euclidean", Ddismethod = "euclidean",
   Hdismethod = "euclidean", Hmethod = "ward.D2", Graph = T,
-  VarCart = F, IndCart = F, ElbowP = F)
+  VarCart = F, IndCart = F)
 }
 \arguments{
 \item{Y}{a numeric matrix or a data frame with all numeric columns (Ex:consumers scores)}
@@ -38,7 +38,7 @@ Clustering(Y, ClustMeth = "hierarchical", k = 3,
 \item{ElbowP}{TRUE if you want to visualize The plot of the elbow method for Hierarchical method}
 }
 \value{
-SomCl,Graph,IndCart,VarCart,Hclustdendrogram=dend_plot,Pvar=p,Pind=p2,ElbowP=p3
+list
 }
 \description{
 This function serves to clustering data analysis using diverse methods and ploting diverses graphs
@@ -48,6 +48,6 @@ This function serves to clustering data analysis using diverse methods and ploti
  library(ClusteringR)
  cl=Clustering(Y=t(hedo),ClustMeth='hierarchical',
  k=3,Hdismethod='euclidean',Hmethod="ward.D2",
- Graph=FALSE,VarCart=FALSE,IndCart=FALSE,ElbowP=FALSE )
+ Graph=FALSE,VarCart=FALSE,IndCart=FALSE)
 
 }
