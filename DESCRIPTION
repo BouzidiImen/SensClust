@@ -18,11 +18,10 @@ Depends:
     plotly,
     shinydashboard,
     dashboardthemes,
-    shiny,
+    shiny,clValid,
     R (>= 3.1)
 Imports: 
-    FactoMineR,fields,
-    clValid,
+    FactoMineR,fields,NbClust,
     factoextra,cluster,
     kohonen
 URL: https://github.com/BouzidiImen/ClusteringR

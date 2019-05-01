@@ -48,6 +48,16 @@ shinyUI(dashboardPage(
                                       font-size: 17px;}
                                       #msg4{color: #0A926E;
                                       font-size: 17px;}
+                                      #cite {
+                                      color: #949793;
+                                      position: absolute;
+                                      bottom: 10px;
+                                      right: 10px;
+                                      font-size: 12px;
+                                      }
+                                      #msg5{color: #8B0000;
+                                      font-size: 17px;}
+
                                       ")),
                  textOutput('msg1'),
                  helpText("Default max. file size is 5MB"),
@@ -78,8 +88,10 @@ shinyUI(dashboardPage(
             box(title = "Basic statistics: Sensory data",status = "primary", solidHeader = T,
                 collapsible = T,uiOutput('tb2'))
           )
-        )
-          ),
+        ),
+        tags$div(id="cite",
+                 'Made by Imen Bouzidi.'
+        )),
       ########## Partional clustering ########
       tabItem(
         tabName = "PCLus",
@@ -185,7 +197,10 @@ shinyUI(dashboardPage(
                  #tabPanel("Further Information")
                ))
         )
-
+        ,
+        tags$div(id="cite",
+                 'Made by Imen Bouzidi.'
+        )
 
 
         ),
@@ -275,6 +290,9 @@ shinyUI(dashboardPage(
                  #)
                )
           )
+        ),
+        tags$div(id="cite",
+                 'Made by Imen Bouzidi.'
         )
 
 
@@ -285,22 +303,18 @@ shinyUI(dashboardPage(
       tabItem(
         tabName = "ClV",
         fluidRow(
-
-
-
-
-          box( title = "Validation of the clustering method",status = "primary", solidHeader = T,
-               collapsible = F,  width = 4  ,
-               selectInput('MethodCLV', 'Choose the methods of clustering:',multiple = T,
+          box( title = "Validate the choice of the Clustering method",status = "primary", solidHeader = T,
+               collapsible = F,width = 4 ,
+               selectInput('Methodvalid', 'Choose the methods of clustering to evaluate :',multiple = T,
                            choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"),
                            selected='hierarchical'),
-
-               selectInput("MetCLV", "Clustering validation measures's type",
+               selectInput("MethValid", "Clustering validation measures's type ",
                            c("internal","stability"),selected = 'internal'),
-               numericInput("min", "Input minimum number of cluster to evaluate", 2, min = 2, max = 9),
-               numericInput("max", "Input mmaximum number of cluster to evaluate:", 10, min = 10, max = 20)
 
-          ), box( status = "primary",  width = 8 ,
+               numericInput("min1", "Input minimum number of cluster ", 2, min = 2, max = 9),
+               numericInput("max1", "Input mmaximum number of cluster ", 10, min = 10, max = 20)
+               )
+          , box( status = "primary",  width = 8 ,
                   tabsetPanel(
                     selected = "Summary",
                     tabPanel("Summary",br(),verbatimTextOutput('sumval')),
@@ -308,7 +322,11 @@ shinyUI(dashboardPage(
                   ))
 
 
-        )#,
+        ),tags$div(id="cite",
+                   'Made by Imen Bouzidi.'
+        )
+
+        #,
         #fluidRow(
          # infoBoxOutput("progressBox",width = 6)
         #)
@@ -319,33 +337,29 @@ shinyUI(dashboardPage(
       tabItem(
         tabName = "EPM",
         fluidRow( width=12,
+                  box(title = "Clustering's parameters ",status = "primary", solidHeader = T,
+                      collapsible = F,
 
 
-
-
-          box( title = "Validate the choice of the Clustering method",status = "primary", solidHeader = T,
-               collapsible = F,
-               selectInput('Methodvalid', 'Choose the methods of clustering to evaluate :',multiple = T,
-                choices=c("hierarchical", "kmeans", "diana", "sota", "pam", "clara"),
-                                              selected='hierarchical'),
-               selectInput("MethValid", "Clustering validation measures's type ",
-                                                         c("internal","stability"),selected = 'internal'),
-               conditionalPanel(
-                 condition = "input.MethValid == 'internal'",
-                 selectInput("Measurei", "Choose a measure:",c("Connectivity","Dunn","Silhouette"))),
-               conditionalPanel(
-                 condition = "input.MethValid == 'stability'",
-                 selectInput("Measures", "Choose a measure:",c("APN","AD","ADM",'FOM'))),
-               numericInput("min1", "Input minimum number of cluster ", 2, min = 2, max = 9),
-               numericInput("max1", "Input mmaximum number of cluster ", 10, min = 10, max = 20),
-
-               textOutput('msg3'),textOutput('msg4')),
+                      selectInput("MethValidEPM", "Clustering validation measures's type ",
+                                  c("internal","stability"),selected = 'internal'),
+                      conditionalPanel(
+                        condition = "input.MethValid == 'internal'",
+                        selectInput("Measurei", "Choose a measure:",c("Connectivity","Dunn","Silhouette"))),
+                      conditionalPanel(
+                        condition = "input.MethValid == 'stability'",
+                        selectInput("Measures", "Choose a measure:",c("APN","AD","ADM",'FOM'))),
+                      textOutput('msg3'),textOutput('msg4')),
           box(title = "Parameters for external preference mapping ",status = "primary", solidHeader = T,
               collapsible = F,
+
+
                #Type of regression's model
                selectInput("mapping", "Type of regression's model for mapping",
                            c('Quadratic','Vector' ,'Circular' , 'Eliptic'),selected = 'Quadratic'),
-              numericInput("ncl", "Input the cluster you want to visualize ", 1, min = 1, max =10)
+              numericInput("ncl", "Input the cluster you want to visualize ", 1, min = 1, max ='output.nbcl')
+              #To fix
+              ,textOutput('msg5')
 
 
 
@@ -363,7 +377,9 @@ shinyUI(dashboardPage(
                   ))
 
 
-        )#,
+        ),tags$div(id="cite",
+                  'Made by Imen Bouzidi.'
+        )
       )
       )
 

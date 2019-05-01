@@ -4,6 +4,7 @@
 #' @import shinydashboard
 #' @import dashboardthemes
 #' @import clValid
+#' @import NbClust
 #' @export
 #' @examples
 #' \dontrun{

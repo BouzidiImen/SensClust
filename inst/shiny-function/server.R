@@ -477,8 +477,8 @@ shinyServer(function(input, output) {
   ############ CLvalid ############
   validation <- reactive({
     if(is.null(hedo())) return ()
-    return(clValid( t(hedo()),input$min:input$max,clMethods =input$MethodCLV
-                    ,validation = input$MetCLV))
+    return(clValid( t(hedo()),input$min1:input$max1,clMethods =input$Methodvalid
+                    ,validation = input$MethValid))
 
   })
   output$sumval <-renderPrint({
@@ -496,7 +496,7 @@ shinyServer(function(input, output) {
  validationchoice <- reactive({
     if(is.null(hedo())) return ()
     return(clValid(t(hedo()),input$min1:input$max1,
-                    clMethods =input$Methodvalid ,validation = input$MethValid))
+                    clMethods =input$Methodvalid ,validation = input$MethValidEPM))
    })
  methclus<- reactive({
    if(is.null(validationchoice())) return ()
@@ -546,6 +546,9 @@ ValidClust=reactive({
 
 })
 
+output$nbcl <- reactive({
+  return(as.numeric(methclus()$nbclust)) #To fix
+})
 
 
 
@@ -576,6 +579,12 @@ return(res)
 })
 
 
+output$msg5<-renderText({
+  if(is.null(validationchoice())) return(NULL)
+  if (input$ncl>methclus()$nbclust) paste( 'Choose a number of a clust between 1 and ',as.character(methclus()$nbclust),sep=' ')
+})
+
+
   #########External preference mapping ###################
   E=reactive({
     if(is.null(hedo())&&is.null(senso())) return()
@@ -595,6 +604,9 @@ return(res)
 
     E()$Graphpred
   })
+
+
+  outputOptions(output, 'nbcl', suspendWhenHidden = FALSE) #doesn't output it to fix
 })
 
 
