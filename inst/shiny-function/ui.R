@@ -121,11 +121,16 @@ shinyUI(dashboardPage(
                  condition = "input.MethodP == 'SOTA'",
                  selectInput("MetSo", "Metric:",c("euclidean","correlation"))),
 
-               numericInput('clusts', 'Cluster count:' , 3, min = 2, max = 9)
+               numericInput('clusts', 'Cluster count:' , 2, min = 2, max = 9)
           ),
           box( status = "primary",  width = 8 ,
                tabsetPanel(
-                 selected = "Cluster Plot",
+                 selected = "Optimal Number Of Clusters",
+                 tabPanel("Optimal Number Of Clusters",br()
+                          ,plotOutput('nbcluster'),
+                          downloadButton(outputId = "downpc", label = "Download the plot")
+
+                          ),
                  tabPanel("Cluster Plot",
                           conditionalPanel(
                             condition= "input.MethodP == 'K-means'",br(), plotOutput('gk'),
@@ -223,6 +228,9 @@ shinyUI(dashboardPage(
 
           box( title = "Choices of the method",status = "primary", solidHeader = T,
                collapsible = F,  width = 4  ,
+               selectInput('M', 'Select a cluster analysis method: ',
+                           choices=c("ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid"),
+                           selected='ward.D'),
                selectInput('MethodH', 'Choose the method of clustering:',
                            choices=c('Hierarchical','Diana'),
                            selected='Hierarchical'),
@@ -239,11 +247,12 @@ shinyUI(dashboardPage(
                                                     "mcquitty",  "centroid", "median"))),
 
 
-               numericInput('clustsH', 'Cluster count:' , 3, min = 2, max = 9)
+               numericInput('clustsH', 'Cluster count:' , 2, min = 2, max = 9)
           ),
           box( status = "primary",  width = 8 ,
                tabsetPanel(
-                 selected = "Dendrogram",
+                 selected = "Optimal Number Of Clusters",
+                 tabPanel("Optimal Number Of Clusters",plotOutput('nbclusterH'),downloadButton(outputId = "downhc", label = "Download the plot")),
                  tabPanel("Dendrogram",
                           conditionalPanel(
                             condition= "input.MethodH == 'Hierarchical'",br(), plotOutput('dh'),

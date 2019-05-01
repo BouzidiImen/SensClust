@@ -37,7 +37,7 @@ plot_grid(cl$ElbowP, cl$dendrogram, cl$VarCart, cl$IndCart, hjust = 1, vjust = 1
           scale = c(1, 1, 1, 1))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
+<img src="man/figures/Figures.png" align="center" />
 
 ``` r
 help("Clustering") # to see more information about the function of clustering 
@@ -65,6 +65,13 @@ Within the package you find a shiny application that demonstrate what the packag
 ClustShiny() #run shiny application
 ```
 
+<img src="man/figures/Shiny.png" align="center" />
+
 P.S:You can visit the following link to get a sneak peek on the package functionalities.
 
 [Shiny application for the package](https://imenbouzidi.shinyapps.io/InterfaceForThepackage/)
+
+Acknowledgement:
+----------------
+
+In preparation of my package, I had to take the help and guidance of my professor Ibtihel Rebhi, who deserve my deepest gratitude.

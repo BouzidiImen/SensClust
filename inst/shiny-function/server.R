@@ -67,6 +67,52 @@ shinyServer(function(input, output) {
 
 
   ############ Pclust ##################
+  N=reactive({
+
+    if(is.null(hedo())) return ()
+    else return(NbClust(data = t(hedo()), distance = "euclidean",method='kmeans'))})
+
+
+  output$nbcluster=renderPlot({
+    if(is.null(hedo())) return ()
+
+
+    else{
+      withProgress(message = 'Making plot', value = 0.1, {
+        # Number of times we'll go through the loop
+        n <- 10
+
+        for (i in 1:n) {
+          # Each time through the loop, add another row of data. This is
+          # a stand-in for a long-running computation.
+          Nb=fviz_nbclust(N(),barfill = '#1abc9c', barcolor = '#1abc9c',
+                          linecolor = '#1abc9c')
+
+          # Increment the progress bar, and update the detail text.
+          incProgress(1/n, detail = paste("Doing part", i))
+
+          # Pause for 0.1 seconds to simulate a long computation.
+          Sys.sleep(0.1)
+        }})
+      Nb
+
+      }
+  })
+
+
+
+
+  output$downpc <- downloadHandler(
+    filename =  function() {
+      paste("NBCLUST.pdf")
+    },
+    # content is a function with argument file. content writes the plot to the device
+    content = function(file) {
+      pdf(file) # open the pdf device
+      print(fviz_nbclust(N()))
+      dev.off()  # turn the device off
+    }
+  )
   ############ kmeans ############
   K=reactive({
     if(is.null(hedo())) return ()
@@ -323,6 +369,52 @@ shinyServer(function(input, output) {
 
 
   ############ Hclustering #################
+  NH=reactive({
+
+    if(is.null(hedo())) return ()
+    else return(NbClust(data = t(hedo()), distance = "euclidean",method=input$M))})
+
+
+  output$nbclusterH=renderPlot({
+    if(is.null(hedo())) return ()
+
+
+    else{
+      withProgress(message = 'Making plot', value = 0.1, {
+        # Number of times we'll go through the loop
+        n <- 10
+
+        for (i in 1:n) {
+          # Each time through the loop, add another row of data. This is
+          # a stand-in for a long-running computation.
+          Nb=fviz_nbclust(NH(),barfill = '#1abc9c', barcolor = '#1abc9c',
+                          linecolor = '#1abc9c')
+
+          # Increment the progress bar, and update the detail text.
+          incProgress(1/n, detail = paste("Doing part", i))
+
+          # Pause for 0.1 seconds to simulate a long computation.
+          Sys.sleep(0.1)
+        }})
+      Nb
+
+    }
+  })
+
+
+
+
+  output$downhc <- downloadHandler(
+    filename =  function() {
+      paste("NBCLUSTH.pdf")
+    },
+    # content is a function with argument file. content writes the plot to the device
+    content = function(file) {
+      pdf(file) # open the pdf device
+      print(fviz_nbclust(N()))
+      dev.off()  # turn the device off
+    }
+  )
 
   ############ Hierch ##########
   H=reactive({
@@ -581,7 +673,7 @@ return(res)
 
 output$msg5<-renderText({
   if(is.null(validationchoice())) return(NULL)
-  if (input$ncl>methclus()$nbclust) paste( 'Choose a number of a clust between 1 and ',as.character(methclus()$nbclust),sep=' ')
+  if (input$ncl>methclus()$nbclust) paste( 'Please choose a number of a clust between 1 and ',as.character(methclus()$nbclust),sep=' ')
 })
 
 

@@ -14,7 +14,6 @@ It makes use of several clustering methods as well as the implementation of part
 
 Finally, a graphical user interface is implemented  with R shiny in order to propose a user friendly package.
 
-
 ## Installation
 You can install the development version from [GitHub](https://github.com/) with:
 ``` r
@@ -38,7 +37,7 @@ library(cowplot)# to use plot_grid
 
 
 
-```{r}
+```{r eval=FALSE}
 
 library(ClusteringR)
 # Create a clustering object  -------------------------------------------------
@@ -53,9 +52,16 @@ plot_grid(cl$ElbowP, cl$dendrogram, cl$VarCart, cl$IndCart, hjust = 1, vjust = 1
           scale = c(1, 1, 1, 1))
 
 ```
+
+<img src="man/figures/Figures.png" align="center" />
+
+
 ```{r eval=FALSE}
 help("Clustering") # to see more information about the function of clustering 
 ```
+
+
+
 
 
 
@@ -77,8 +83,13 @@ Within the package you find a shiny application that demonstrate what the packag
 ```{r eval=FALSE}
 ClustShiny() #run shiny application
 ```
-
+<img src="man/figures/Shiny.png" align="center" />
 
 P.S:You can visit the following link to get a sneak peek on the package functionalities.
 
 [Shiny application for the package](https://imenbouzidi.shinyapps.io/InterfaceForThepackage/)
+
+
+## Acknowledgement:
+
+In preparation of my package, I had to take the help and guidance of my professor Ibtihel Rebhi, who deserve my deepest gratitude.

@@ -31,6 +31,8 @@
 
 Clustering=function(Y,ClustMeth='hierarchical',k=3,Sotadismethod='euclidean',Pdismethod='euclidean',Cdismethod='euclidean',Ddismethod='euclidean',Hdismethod='euclidean',Hmethod="ward.D2",
                     Graph=T,VarCart=F,IndCart=F,ElbowP=F ){
+
+
 repPCA=function(class,Y){
       classif=cbind.data.frame(class,Y)
 
@@ -181,6 +183,7 @@ switch (ClustMeth,
 
 
 )
+
 
 }
 
