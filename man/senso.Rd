@@ -4,7 +4,7 @@
 \name{senso}
 \alias{senso}
 \title{Sensory data}
-\format{A data frame with 192 rows and 294 variables:}
+\format{A data frame with 192 rows and 294 variables}
 \usage{
 senso
 }
@@ -17,5 +17,9 @@ library(ClusteringR)
 EPM(Y=t(hedo),X=senso,ModelType='Quadratic',
 nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,
 Graph3D=FALSE,statistic.Value.Type='rsquared')}
+#' @references
+FranÃ§ois Husson, M 2017, Jeux de donnees,
+Jeux de donnees en sensometrie, <https://husson.github.io/data.html>.
+
 }
 \keyword{datasets}

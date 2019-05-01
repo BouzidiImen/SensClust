@@ -21,7 +21,7 @@ Usage
 
 You can find below an overall look at how ClusteringR can be useful for your sensory analysis. \#\#\#Clustering : Diverse methods of clustering are available in the ClusteringR package :
 
-'hierarchical','diana','kmeans','clara','pam','sota' and 'som'
+'hierarchical', 'diana', 'kmeans', 'clara', 'pam', 'sota' and 'som'
 
 ``` r
 library(ClusteringR)

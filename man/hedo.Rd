@@ -18,5 +18,10 @@ This is hedonic data from a trial of 8 products within 294 customers.
  k=3,Hdismethod='euclidean',Hmethod="ward.D2",
  Graph=T,VarCart=F,IndCart=F,ElbowP=F )
 }
+
+}
+\references{
+François Husson, Jeux de donnees,
+Jeux de donnees en sensometrie, <https://husson.github.io/data.html>.
 }
 \keyword{datasets}

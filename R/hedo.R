@@ -9,5 +9,9 @@
 #'  k=3,Hdismethod='euclidean',Hmethod="ward.D2",
 #'  Graph=T,VarCart=F,IndCart=F,ElbowP=F )
 #' }
+#'
+#' @references
+#' François Husson, Jeux de donnees,
+#' Jeux de donnees en sensometrie, <https://husson.github.io/data.html>.
 
 "hedo"
