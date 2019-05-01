@@ -65,7 +65,7 @@ Within the package you find a shiny application that demonstrate what the packag
 ClustShiny() #run shiny application
 ```
 
-<img src="man/figures/Shiny.png" align="center" />
+<img src="man/figures/Shiny.PNG" align="center" />
 
 P.S:You can visit the following link to get a sneak peek on the package functionalities.
 
