@@ -21,7 +21,6 @@ This is hedonic data from a trial of 8 products within 294 customers.
 
 }
 \references{
-François Husson, Jeux de donnees,
-Jeux de donnees en sensometrie, <https://husson.github.io/data.html>.
+\url{https://husson.github.io/data.html}
 }
 \keyword{datasets}

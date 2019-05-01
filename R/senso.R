@@ -10,9 +10,7 @@
 #' EPM(Y=t(hedo),X=senso,ModelType='Quadratic',
 #' nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,
 #' Graph3D=FALSE,statistic.Value.Type='rsquared')}
-
-#' #' @references
-#' François Husson, M 2017, Jeux de donnees,
-#' Jeux de donnees en sensometrie, <https://husson.github.io/data.html>.
+#'
+#' @references \url{https://husson.github.io/data.html}
 #'
 'senso'

@@ -9,7 +9,7 @@ Finally, a graphical user interface is implemented with R shiny in order to prop
 Installation
 ------------
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/) with :
 
 ``` r
 install.packages("devtools")
@@ -46,8 +46,8 @@ help("Clustering") # to see more information about the function of clustering
 Data available in the package
 -----------------------------
 
--   senso: sensory data from a professional trial of 8 biscuits by 12 judges.
--   hedo: hedonic data from a trial of 8 biscuits by 294 customers.
+-   senso : sensory data from a professional trial of 8 biscuits by 12 judges.
+-   hedo : hedonic data from a trial of 8 biscuits by 294 customers.
 
 ``` r
 #Usage 
@@ -67,11 +67,11 @@ ClustShiny() #run shiny application
 
 <img src="man/figures/Shiny.PNG" align="center" />
 
-P.S:You can visit the following link to get a sneak peek on the package functionalities.
+P.S : You can visit the following link to get a sneak peek on the package functionalities.
 
 [Shiny application for the package](https://imenbouzidi.shinyapps.io/InterfaceForThepackage/)
 
-Acknowledgement:
-----------------
+Acknowledgement :
+-----------------
 
 In preparation of my package, I had to take the help and guidance of my professor Ibtihel Rebhi, who deserves my deepest gratitude.
