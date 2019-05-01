@@ -90,7 +90,7 @@ shinyUI(dashboardPage(
           )
         ),
         tags$div(id="cite",
-                 'Made by Imen Bouzidi.'
+                 '\U00A9 Imen Bouzidi'
         )),
       ########## Partional clustering ########
       tabItem(
@@ -204,7 +204,7 @@ shinyUI(dashboardPage(
         )
         ,
         tags$div(id="cite",
-                 'Made by Imen Bouzidi.'
+                 '\U00A9 Imen Bouzidi'
         )
 
 
@@ -301,7 +301,7 @@ shinyUI(dashboardPage(
           )
         ),
         tags$div(id="cite",
-                 'Made by Imen Bouzidi.'
+                 '\U00A9 Imen Bouzidi'
         )
 
 
@@ -332,7 +332,7 @@ shinyUI(dashboardPage(
 
 
         ),tags$div(id="cite",
-                   'Made by Imen Bouzidi.'
+                   '\U00A9 Imen Bouzidi'
         )
 
         #,
@@ -387,7 +387,7 @@ shinyUI(dashboardPage(
 
 
         ),tags$div(id="cite",
-                  'Made by Imen Bouzidi.'
+                  '\U00A9 Imen Bouzidi'
         )
       )
       )

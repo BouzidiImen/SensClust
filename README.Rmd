@@ -92,4 +92,4 @@ P.S:You can visit the following link to get a sneak peek on the package function
 
 ## Acknowledgement:
 
-In preparation of my package, I had to take the help and guidance of my professor Ibtihel Rebhi, who deserve my deepest gratitude.
+In preparation of my package, I had to take the help and guidance of my professor Ibtihel Rebhi, who deserves my deepest gratitude.
