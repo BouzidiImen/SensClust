@@ -12,7 +12,6 @@
 #' @param Graph  TRUE if you want to visualize the dendrogram (only for Hierarchical and Diana methods )
 #' @param VarCart  TRUE if you want to visualize Variables's representation
 #' @param IndCart  TRUE if you want to visualize Distribution of consumers
-#' @param ElbowP TRUE if you want to visualize The plot of the elbow method for Hierarchical method
 #'
 #' @return list
 #' @export

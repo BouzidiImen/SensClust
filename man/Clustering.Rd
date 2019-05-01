@@ -34,8 +34,6 @@ Clustering(Y, ClustMeth = "hierarchical", k = 3,
 \item{VarCart}{TRUE if you want to visualize Variables's representation}
 
 \item{IndCart}{TRUE if you want to visualize Distribution of consumers}
-
-\item{ElbowP}{TRUE if you want to visualize The plot of the elbow method for Hierarchical method}
 }
 \value{
 list
