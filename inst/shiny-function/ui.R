@@ -353,10 +353,10 @@ shinyUI(dashboardPage(
                       selectInput("MethValidEPM", "Clustering validation measures's type ",
                                   c("internal","stability"),selected = 'internal'),
                       conditionalPanel(
-                        condition = "input.MethValid == 'internal'",
+                        condition = "input.MethValidEPM == 'internal'",
                         selectInput("Measurei", "Choose a measure:",c("Connectivity","Dunn","Silhouette"))),
                       conditionalPanel(
-                        condition = "input.MethValid == 'stability'",
+                        condition = "input.MethValidEPM == 'stability'",
                         selectInput("Measures", "Choose a measure:",c("APN","AD","ADM",'FOM'))),
                       textOutput('msg3'),textOutput('msg4')),
           box(title = "Parameters for external preference mapping ",status = "primary", solidHeader = T,

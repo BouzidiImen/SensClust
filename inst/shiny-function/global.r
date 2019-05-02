@@ -1,0 +1,6 @@
+library(NbClust)
+library(shinydashboard)
+library(plotly)
+library(dashboardthemes)
+library(clValid)
+library(factoextra)

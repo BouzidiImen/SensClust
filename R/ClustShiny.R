@@ -1,10 +1,7 @@
 #' Graphical representation of the package
 #' @import shiny
 #' @import plotly
-#' @import shinydashboard
-#' @import dashboardthemes
-#' @import clValid
-#' @import NbClust
+#' @import factoextra
 #' @export
 #' @examples
 #' \dontrun{

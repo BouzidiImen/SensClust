@@ -15,14 +15,12 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Depends: 
-    plotly,
-    shinydashboard,
-    dashboardthemes,
-    shiny,clValid,
+    shiny,
     R (>= 3.1)
 Imports: 
-    FactoMineR,fields,NbClust,
-    factoextra,cluster,
+    FactoMineR,fields,
+    factoextra,clValid,
+    cluster,plotly,
     kohonen
 URL: https://github.com/BouzidiImen/ClusteringR
 BugReports: https://github.com/BouzidiImen/ClusteringR/issues

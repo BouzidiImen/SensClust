@@ -419,7 +419,7 @@ shinyServer(function(input, output) {
   ############ Hierch ##########
   H=reactive({
     if(is.null(hedo())) return()
-    return(Clustering(t(hedo()),ClustMeth='hierarchical',k=input$clustsH,Hdismethod=input$MetH,Hmethod=input$MetricH,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
+    return(Clustering(t(hedo()),ClustMeth='hierarchical',k=input$clustsH,Hdismethod=input$MetH,Hmethod=input$MetricH,Graph=F,VarCart=F,IndCart=F ))
   })
   output$dh=renderPlot({
 
@@ -482,26 +482,14 @@ shinyServer(function(input, output) {
     }
   )
 
-  output$ELH=renderPlot({
-    show(H()$ElbowP)
-  })
-  output$down111 <- downloadHandler(
-    filename =  function() {
-      paste("Elbowplot.pdf")
-    },
-    # content is a function with argument file. content writes the plot to the device
-    content = function(file) {
-      pdf(file) # open the pdf device
-      print( H()$ElbowP)
-      dev.off()  # turn the device off
-    }
-  )
+
+
 
 
   ############ Dina #####################
   D=reactive({
     if(is.null(hedo())) return()
-    return(Clustering(t(hedo()),ClustMeth='diana',k=input$clustsH,Ddismethod = input$MetD,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
+    return(Clustering(t(hedo()),ClustMeth='diana',k=input$clustsH,Ddismethod = input$MetD,Graph=F,VarCart=F,IndCart=F))
   })
   output$dd=renderPlot({
     withProgress(message = 'Making plot', value = 0.1, {
@@ -634,7 +622,7 @@ shinyServer(function(input, output) {
   })
 ValidClust=reactive({
   if(is.null(validationchoice())) return ()
-  return(Clustering(t(hedo()),ClustMeth=as.character(methclus()$m),k=methclus()$nbclust,Graph=F,VarCart=F,IndCart=F,ElbowP=F ))
+  return(Clustering(t(hedo()),ClustMeth=as.character(methclus()$m),k=methclus()$nbclust,Graph=F,VarCart=F,IndCart=F ))
 
 })
 
