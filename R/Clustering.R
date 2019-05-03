@@ -20,6 +20,7 @@
 #' @import cluster
 #' @import clValid
 #' @import kohonen
+#' @import grDevices
 #' @examples
 #'
 #'  library(ClusteringR)

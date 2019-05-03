@@ -626,9 +626,10 @@ ValidClust=reactive({
 
 })
 
-output$nbcl <- reactive({
-  return(as.numeric(methclus()$nbclust)) #To fix
-})
+#output$nbcl <- reactive({
+ # if(is.null(validationchoice())) return ()
+#  else return(as.numeric(methclus()$nbclust)) #To fix
+#})
 
 
 
@@ -668,25 +669,29 @@ output$msg5<-renderText({
   #########External preference mapping ###################
   E=reactive({
     if(is.null(hedo())&&is.null(senso())) return()
-    return(EPM(classes()[[input$ncl]],senso(),ModelType = input$mapping ,nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE))
-  })
-  output$pref=renderPlotly({
-    if(is.null(hedo())&&is.null(senso())) return()
-    E()$Graph2D
+    return(EPM(classes()[[input$ncl]],senso(),ModelType = input$mapping ,nbpoints=50,Graphpred=FALSE,respt=F,Graph2D=FALSE,Graph3D=FALSE))
   })
   output$map=renderPlotly({
     if(is.null(hedo())&&is.null(senso())) return()
-
     E()$Graph3D
+  })
+  output$pref=renderPlot({
+    if(is.null(hedo())&&is.null(senso())) return()
+
+    E=EPM(classes()[[input$ncl]],senso(),Graph2D = T)
   })
   output$pred=renderPlotly({
     if(is.null(hedo())&&is.null(senso())) return()
 
     E()$Graphpred
   })
+  output$pca=renderPlot({
+    if(is.null(hedo())&&is.null(senso())) return()
+    E=EPM(classes()[[input$ncl]],senso(),Graph2D = F,respt=T)
+  })
 
 
-  outputOptions(output, 'nbcl', suspendWhenHidden = FALSE) #doesn't output it to fix
+ # outputOptions(output, 'nbcl', suspendWhenHidden = FALSE) #doesn't output it to fix
 })
 
 

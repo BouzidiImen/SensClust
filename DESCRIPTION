@@ -21,6 +21,6 @@ Imports:
     FactoMineR,fields,
     factoextra,clValid,
     cluster,plotly,
-    kohonen
+    kohonen,grDevices
 URL: https://github.com/BouzidiImen/ClusteringR
 BugReports: https://github.com/BouzidiImen/ClusteringR/issues

@@ -11,10 +11,13 @@
 #' @param Graph2D :TRUE if you want to view preferences of one consumer,FaLSE otherwise
 #' @param Graph3D :TRUE if you want to view the external preference Map in 3D,FALSE otherwise
 #' @param statistic.Value.Type :Extract the 'rsquared' , 'fstatistic' or 'AIC' of every regression
+#' @param respt a vaiable
 #' @import FactoMineR
 #' @import plotly
 #' @import fields
+#' @import factoextra
 #' @return pred,pref,Regression,Statistic.values,Graphpred,Graph2D,Graph3D
+#'
 #' @export
 #'
 #' @examples
@@ -25,7 +28,7 @@
 #' Graph3D=FALSE,statistic.Value.Type='rsquared')
 #' consumer.preferences=E$prefc
 #'
-EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE,statistic.Value.Type='rsquared'){
+EPM=function(Y,X,ModelType='Quadratic',respt=FALSE,nbpoints=50,Graphpred=FALSE,Graph2D=FALSE,Graph3D=FALSE,statistic.Value.Type='rsquared'){
 
   ###### PCA on the senso Dataset X : contains marks given by professional jugdes
     S= stats::aggregate(X[,4:ncol(X)], list(X[,3]), mean,na.rm=T)
@@ -73,15 +76,24 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
   p1=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='Score')%>%
     layout(title = "Prediction of one consumer's score ")
-  p2=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='contour', contours = list(showlabels = TRUE))%>%
-    colorbar(title ='Percentage of Individuals')%>%
-    layout(title = "External Preference Mapping")
+  #p2=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='contour', contours = list(showlabels = TRUE))%>%
+    #colorbar(title ='Percentage of Individuals')%>%
+   # layout(title = "External Preference Mapping")
 
   p3=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='surface')%>%
     colorbar(title ='Percentage of Individuals')%>%
     layout(title = "External Preference Map in 3D ")
+
+  if(respt==T) {show(fviz_pca_var(respca, col.var = "cos2",gradient.cols ="jco",repel = T ))}
+
   if(Graphpred)show(p1)
-  if(Graph2D) show(p2)
+  if(Graph2D) {
+    image.plot(imgpref,main='External Preference Mapping',col=terrain.colors(100))
+    graphics::contour(x=imgpref$x,y=imgpref$y,z=imgpref$z,add=T,levels = seq(from=0,to=100,by=5))
+    graphics::text(x=Dim1,y=Dim2,labels = rownames(Y),pos=3)
+    graphics::points(x=Dim1,y=Dim2,pch=20)
+
+    }
   if(Graph3D) show(p3)
 
 
@@ -97,7 +109,5 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
             A=unlist(res.reg,lapply(res.reg$regression, function(x)summary(x)$extractAIC[2]))
           },
           stop("type must be 'rsquared' , 'fstatistic' or 'AIC'" ))
-
-
-  return(list(pred=pred,pref=pref,Regression=res.reg,Statistic.values=A,Graphpred=p1,Graph2D=p2,Graph3D=p3))
+  return(list(pred=pred,pref=pref,Regression=res.reg,Statistic.values=A,Graphpred=p1,Graph3D=p3))
 }

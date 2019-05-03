@@ -4,8 +4,8 @@
 \alias{EPM}
 \title{External preference mapping}
 \usage{
-EPM(Y, X, ModelType = "Quadratic", nbpoints = 50, Graphpred = FALSE,
-  Graph2D = FALSE, Graph3D = FALSE,
+EPM(Y, X, ModelType = "Quadratic", respt = FALSE, nbpoints = 50,
+  Graphpred = FALSE, Graph2D = FALSE, Graph3D = FALSE,
   statistic.Value.Type = "rsquared")
 }
 \arguments{
@@ -14,6 +14,8 @@ EPM(Y, X, ModelType = "Quadratic", nbpoints = 50, Graphpred = FALSE,
 \item{X}{:a data frame with n rows (individuals) and p columns (numeric variables)}
 
 \item{ModelType}{:Type of regression's model can be 'Vector' ,'Circular','Quadratic' or 'Eliptic'}
+
+\item{respt}{a vaiable}
 
 \item{nbpoints}{:Number of points to create the dicrete space}
 
