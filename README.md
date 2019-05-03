@@ -33,11 +33,10 @@ clusters=cl$classes
 
 #Plot of elbow method , dendrogram , variables representation and individuals
 
-plot_grid(cl$dendrogram, cl$VarCart, cl$IndCart, hjust = 1, vjust = 1,
-          scale = c(1, 1, 1, 1))
+plot(cl$dendrogram)
 ```
 
-<img src="man/figures/Figures.png" align="center" />
+![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
 ``` r
 help("Clustering") # to see more information about the function of clustering 
