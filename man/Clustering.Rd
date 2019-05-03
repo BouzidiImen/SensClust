@@ -36,7 +36,7 @@ Clustering(Y, ClustMeth = "hierarchical", k = 3,
 \item{IndCart}{TRUE if you want to visualize Distribution of consumers}
 }
 \value{
-list
+Graph,IndCart,VarCart,classes
 }
 \description{
 This function serves to clustering data analysis using diverse methods and ploting diverses graphs

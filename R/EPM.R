@@ -73,13 +73,13 @@ EPM=function(Y,X,ModelType='Quadratic',nbpoints=50,Graphpred=FALSE,Graph2D=FALSE
   p1=plot_ly(x= imgpred$x,y= imgpred$y,z= imgpred$z,type='contour', contours = list(showlabels = TRUE)) %>%
     colorbar(title ='Score')%>%
     layout(title = "Prediction of one consumer's score ")
-  p2=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='contour', contours = list(showlabels = TRUE)) %>%
-    colorbar(title ='Score')%>%
-    layout(title = "Preferences of one consumer")
+  p2=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='contour', contours = list(showlabels = TRUE))%>%
+    colorbar(title ='Percentage of Individuals')%>%
+    layout(title = "External Preference Mapping")
 
   p3=plot_ly(x=imgpref$x,y=imgpref$y,z=imgpref$z,type='surface')%>%
-    colorbar(title ='Score')%>%
-    layout(title = "Preference Map ")
+    colorbar(title ='Percentage of Individuals')%>%
+    layout(title = "External Preference Map in 3D ")
   if(Graphpred)show(p1)
   if(Graph2D) show(p2)
   if(Graph3D) show(p3)

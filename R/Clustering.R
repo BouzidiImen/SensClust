@@ -13,7 +13,7 @@
 #' @param VarCart  TRUE if you want to visualize Variables's representation
 #' @param IndCart  TRUE if you want to visualize Distribution of consumers
 #'
-#' @return list
+#' @return  Graph,IndCart,VarCart,classes
 #' @export
 #' @import FactoMineR
 #' @import factoextra
@@ -45,7 +45,7 @@ repPCA=function(class,Y){
                   palette = 'jco',
                   addEllipses = T,
                   legend.title = "Groups")
-  return(list(graphvar=p,graphind=p2))
+  return(list(res.pca=res.pca,graphvar=p,graphind=p2))
 }
 
 if(ClustMeth=='hierarchical'||ClustMeth=='diana'||ClustMeth=='kmeans'||ClustMeth=='clara'||
