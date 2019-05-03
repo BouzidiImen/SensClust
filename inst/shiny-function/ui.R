@@ -376,7 +376,7 @@ shinyUI(dashboardPage(
         fluidRow(
                  box( status = "primary",width=12,
                   tabsetPanel(
-                    selected = "Prediction Plot"
+                    selected = "Sensory variables distribution"
                     ,
                     tabPanel("Sensory variables distribution",br(),plotOutput("pca")),
                     tabPanel("Prediction Plot",br(),plotlyOutput("pred")),
