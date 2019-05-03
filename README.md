@@ -36,7 +36,7 @@ clusters=cl$classes
 plot(cl$dendrogram)
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
+<img src="man/figures/Dendo.PNG" align="center" />
 
 ``` r
 help("Clustering") # to see more information about the function of clustering 
