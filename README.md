@@ -36,7 +36,7 @@ clusters=cl$classes
 plot(cl$dendrogram)
 ```
 
-<img src="man/figures/Dendo.PNG" align="center" />
+<img src="man/figures/Dendo.png" align="center" />
 
 ``` r
 help("Clustering") # to see more information about the function of clustering 
@@ -52,7 +52,7 @@ library(ClusteringR)
 E <- EPM(hedo,senso,ModelType='Quadratic',respt=FALSE,nbpoints=50,Graphpred=FALSE,Graph2D=TRUE,Graph3D=FALSE,statistic.Value.Type='rsquared')
 ```
 
-<img src="man/figures/fig.PNG" align="center" />
+<img src="man/figures/fig.png" align="center" />
 
 Data available in the package
 -----------------------------
