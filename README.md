@@ -31,7 +31,7 @@ cl <- Clustering(t(hedo),ClustMeth='hierarchical',k=3,Hdismethod='euclidean',Hme
 # get clusters
 clusters=cl$classes
 
-#Plot of elbow method , dendrogram , variables representation and individuals
+#Plot of  dendrogram 
 
 plot(cl$dendrogram)
 ```
@@ -41,6 +41,18 @@ plot(cl$dendrogram)
 ``` r
 help("Clustering") # to see more information about the function of clustering 
 ```
+
+### Sensory Analysis :
+
+Based on the sensory map, this package make it easier to know consumer behaviour, their likes and dislikes.
+
+``` r
+library(ClusteringR)
+# Create a clustering object  -------------------------------------------------
+E <- EPM(hedo,senso,ModelType='Quadratic',respt=FALSE,nbpoints=50,Graphpred=FALSE,Graph2D=TRUE,Graph3D=FALSE,statistic.Value.Type='rsquared')
+```
+
+<img src="man/figures/fig.PNG" align="center" />
 
 Data available in the package
 -----------------------------
@@ -65,6 +77,10 @@ ClustShiny() #run shiny application
 ```
 
 <img src="man/figures/Shiny.PNG" align="center" />
+
+<img src="man/figures/shiny1.PNG" align="center" />
+
+<img src="man/figures/shiny2.PNG" align="center" />
 
 P.S : You can visit the following link to get a sneak peek on the package functionalities.
 
