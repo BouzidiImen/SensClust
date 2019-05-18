@@ -96,7 +96,7 @@ shinyServer(function(input, output) {
         }})
       Nb
 
-      }
+    }
   })
 
 
@@ -573,97 +573,97 @@ shinyServer(function(input, output) {
     write.table(optimalScores(validation()), file,sep=";",row.names = F)
   })
 
- validationchoice <- reactive({
+  validationchoice <- reactive({
     if(is.null(hedo())) return ()
     return(clValid(t(hedo()),input$min1:input$max1,
-                    clMethods =input$Methodvalid ,validation = input$MethValidEPM))
-   })
- methclus<- reactive({
-   if(is.null(validationchoice())) return ()
+                   clMethods =input$Methodvalid ,validation = input$MethValidEPM))
+  })
+  methclus<- reactive({
+    if(is.null(validationchoice())) return ()
     else{
       if(input$MethValid == 'internal') {
-      switch (input$Measurei,
-              Connectivity = {
-                nbclust=as.numeric(as.character(optimalScores(validationchoice())[1,3]))
-                m=optimalScores(validationchoice())[1,2]
-              },Dunn={
-                m=optimalScores(validationchoice())[2,2]
-                nbclust=as.numeric(as.character(optimalScores(validationchoice())[2,3]))
-              },Silhouette={
-                m=optimalScores(validationchoice())[3,2]
-                nbclust=as.numeric(as.character(optimalScores(validationchoice())[3,3]))}
-      )
+        switch (input$Measurei,
+                Connectivity = {
+                  nbclust=as.numeric(as.character(optimalScores(validationchoice())[1,3]))
+                  m=optimalScores(validationchoice())[1,2]
+                },Dunn={
+                  m=optimalScores(validationchoice())[2,2]
+                  nbclust=as.numeric(as.character(optimalScores(validationchoice())[2,3]))
+                },Silhouette={
+                  m=optimalScores(validationchoice())[3,2]
+                  nbclust=as.numeric(as.character(optimalScores(validationchoice())[3,3]))}
+        )
 
+      }
+      else{
+        switch (input$Measures,
+                APN= {
+                  m=optimalScores(validationchoice())[1,2]
+                  nbclust=as.numeric(as.character(optimalScores(validationchoice())[1,3]))
+                },
+                AD={
+                  m=optimalScores(validationchoice())[2,2]
+                  nbclust=as.numeric(as.character(optimalScores(validationchoice())[2,3]))
+                },
+                ADM={
+                  m=optimalScores(validationchoice())[3,2]
+                  nbclust=as.numeric(as.character(optimalScores(validationchoice())[3,3]))
+                }
+                ,FOM={
+                  m=optimalScores(validationchoice())[4,2]
+                  nbclust=as.numeric(as.character(optimalScores(validationchoice())[4,3]))
+                }
+        )
+
+      }
     }
-   else{
-      switch (input$Measures,
-              APN= {
-                m=optimalScores(validationchoice())[1,2]
-                nbclust=as.numeric(as.character(optimalScores(validationchoice())[1,3]))
-              },
-              AD={
-                m=optimalScores(validationchoice())[2,2]
-              nbclust=as.numeric(as.character(optimalScores(validationchoice())[2,3]))
-              },
-             ADM={
-              m=optimalScores(validationchoice())[3,2]
-             nbclust=as.numeric(as.character(optimalScores(validationchoice())[3,3]))
-             }
-              ,FOM={
-              m=optimalScores(validationchoice())[4,2]
-              nbclust=as.numeric(as.character(optimalScores(validationchoice())[4,3]))
-              }
-     )
-
-   }
-   }
     return(data.frame(m,nbclust))
 
   })
-ValidClust=reactive({
-  if(is.null(validationchoice())) return ()
-  return(Clustering(t(hedo()),ClustMeth=as.character(methclus()$m),k=methclus()$nbclust,Graph=F,VarCart=F,IndCart=F ))
+  ValidClust=reactive({
+    if(is.null(validationchoice())) return ()
+    return(Clustering(t(hedo()),ClustMeth=as.character(methclus()$m),k=methclus()$nbclust,Graph=F,VarCart=F,IndCart=F ))
 
-})
+  })
 
-#output$nbcl <- reactive({
- # if(is.null(validationchoice())) return ()
-#  else return(as.numeric(methclus()$nbclust)) #To fix
-#})
-
-
-
-
-output$msg3<-renderText({
-  if(is.null(validationchoice())) return(NULL)
-  paste('The best method of clustering is  ',
-  as.character(methclus()$m),sep=' ')
-
-})
-output$msg4<-renderText({
-  if(is.null(validationchoice())) return(NULL)
-  paste( 'with an optimal number of clusters = ',
-        as.character(methclus()$nbclust),sep=' ')
-})
+  #output$nbcl <- reactive({
+  # if(is.null(validationchoice())) return ()
+  #  else return(as.numeric(methclus()$nbclust)) #To fix
+  #})
 
 
 
-classes=reactive({
-  if(is.null(validationchoice())) return ()
-res=vector('list',ncol(hedo()))
-for(i in 1:methclus()$nbclust){
 
-  res[[i]]=hedo()[ValidClust()$classes==i]
+  output$msg3<-renderText({
+    if(is.null(validationchoice())) return(NULL)
+    paste('The best method of clustering is  ',
+          as.character(methclus()$m),sep=' ')
 
-}
-return(res)
-})
+  })
+  output$msg4<-renderText({
+    if(is.null(validationchoice())) return(NULL)
+    paste( 'with an optimal number of clusters = ',
+           as.character(methclus()$nbclust),sep=' ')
+  })
 
 
-output$msg5<-renderText({
-  if(is.null(validationchoice())) return(NULL)
-  if (input$ncl>methclus()$nbclust) paste( 'Please choose a number of a clust between 1 and ',as.character(methclus()$nbclust),sep=' ')
-})
+
+  classes=reactive({
+    if(is.null(validationchoice())) return ()
+    res=vector('list',ncol(hedo()))
+    for(i in 1:methclus()$nbclust){
+
+      res[[i]]=hedo()[ValidClust()$classes==i]
+
+    }
+    return(res)
+  })
+
+
+  output$msg5<-renderText({
+    if(is.null(validationchoice())) return(NULL)
+    if (input$ncl>methclus()$nbclust) paste( 'Please choose a number of a clust between 1 and ',as.character(methclus()$nbclust),sep=' ')
+  })
 
 
   #########External preference mapping ###################
@@ -680,6 +680,18 @@ output$msg5<-renderText({
 
     E=EPM(classes()[[input$ncl]],senso(),Graph2D = T)
   })
+
+  output$downPM<- downloadHandler(
+    filename =  function() {
+      paste("PrefPlot.pdf")
+    },
+    # content is a function with argument file. content writes the plot to the device
+    content = function(file) {
+      pdf(file) # open the pdf device
+      EPM(classes()[[input$ncl]],senso(),Graph2D = T)
+      dev.off()  # turn the device off
+    }
+  )
   output$pred=renderPlotly({
     if(is.null(hedo())&&is.null(senso())) return()
 
@@ -689,9 +701,20 @@ output$msg5<-renderText({
     if(is.null(hedo())&&is.null(senso())) return()
     E=EPM(classes()[[input$ncl]],senso(),Graph2D = F,respt=T)
   })
+  output$downDIST <- downloadHandler(
+    filename =  function() {
+      paste("PCA.pdf")
+    },
+    # content is a function with argument file. content writes the plot to the device
+    content = function(file) {
+      pdf(file) # open the pdf device
+      EPM(classes()[[input$ncl]],senso(),Graph2D = F,respt=T)
+      dev.off()  # turn the device off
+    }
+  )
 
 
- # outputOptions(output, 'nbcl', suspendWhenHidden = FALSE) #doesn't output it to fix
+  # outputOptions(output, 'nbcl', suspendWhenHidden = FALSE) #doesn't output it to fix
 })
 
 

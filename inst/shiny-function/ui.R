@@ -130,7 +130,7 @@ shinyUI(dashboardPage(
                           ,plotOutput('nbcluster'),
                           downloadButton(outputId = "downpc", label = "Download the plot")
 
-                          ),
+                 ),
                  tabPanel("Cluster Plot",
                           conditionalPanel(
                             condition= "input.MethodP == 'K-means'",br(), plotOutput('gk'),
@@ -153,49 +153,49 @@ shinyUI(dashboardPage(
                             downloadButton(outputId = "downSO1", label = "Download the plot")
                           )
                  )#,
-                # tabPanel("Variables Distribution ",
+                 # tabPanel("Variables Distribution ",
                  #         conditionalPanel(
-                  #          condition= "input.MethodP == 'K-means'",br(), plotOutput('vk'),
-                    #        downloadButton(outputId = "down1", label = "Download the plot")
-                   #       ),
-                    #      conditionalPanel(
-                     #       condition= "input.MethodP == 'CLARA'",br(), plotOutput('vc'),
-                     #       downloadButton(outputId = "down4", label = "Download the plot")
-                     #     ),
-                  #        conditionalPanel(
-                   #         condition = "input.MethodP == 'PAM'", br(),plotOutput('vp'),
-                  #          downloadButton(outputId = "down7", label = "Download the plot")
-                  #        ),conditionalPanel(
-                   #         condition = "input.MethodP == 'SOTA'", br(),plotOutput('vS'),
-                    #        downloadButton(outputId = "down16", label = "Download the plot")
-                    #      ),
-                     #     conditionalPanel(
-                      #      condition = "input.MethodP == 'SOM'", br(),plotOutput('vSom'),
-                       #     downloadButton(outputId = "downSO2", label = "Download the plot")
-                        #  )
+                 #          condition= "input.MethodP == 'K-means'",br(), plotOutput('vk'),
+                 #        downloadButton(outputId = "down1", label = "Download the plot")
+                 #       ),
+                 #      conditionalPanel(
+                 #       condition= "input.MethodP == 'CLARA'",br(), plotOutput('vc'),
+                 #       downloadButton(outputId = "down4", label = "Download the plot")
+                 #     ),
+                 #        conditionalPanel(
+                 #         condition = "input.MethodP == 'PAM'", br(),plotOutput('vp'),
+                 #          downloadButton(outputId = "down7", label = "Download the plot")
+                 #        ),conditionalPanel(
+                 #         condition = "input.MethodP == 'SOTA'", br(),plotOutput('vS'),
+                 #        downloadButton(outputId = "down16", label = "Download the plot")
+                 #      ),
+                 #     conditionalPanel(
+                 #      condition = "input.MethodP == 'SOM'", br(),plotOutput('vSom'),
+                 #     downloadButton(outputId = "downSO2", label = "Download the plot")
+                 #  )
 
                  #),
                  #tabPanel("Individuals Plot",
-                  #        conditionalPanel(
-                   #         condition= "input.MethodP == 'K-means'",br(), plotOutput('ik'),
-                    #        downloadButton(outputId = "down2", label = "Download the plot")
-                     #     ),
-                      #    conditionalPanel(
-                       #     condition= "input.MethodP == 'CLARA'",br(), plotOutput('ic'),
-                        #    downloadButton(outputId = "down5", label = "Download the plot")
-                         # ),
-                        #  conditionalPanel(
-                         #   condition = "input.MethodP == 'PAM'", br(),plotOutput('ip'),
-                          #  downloadButton(outputId = "down8", label = "Download the plot")
-                          #),
-                          #conditionalPanel(
-                           # condition = "input.MethodP == 'SOTA'", br(),plotOutput('iS'),
-                            #downloadButton(outputId = "down17", label = "Download the plot")
-                      #    ),
-                       #   conditionalPanel(
-                        #    condition = "input.MethodP == 'SOM'", br(),plotOutput('iSom'),
-                      #      downloadButton(outputId = "downSO3", label = "Download the plot")
-                      #    )
+                 #        conditionalPanel(
+                 #         condition= "input.MethodP == 'K-means'",br(), plotOutput('ik'),
+                 #        downloadButton(outputId = "down2", label = "Download the plot")
+                 #     ),
+                 #    conditionalPanel(
+                 #     condition= "input.MethodP == 'CLARA'",br(), plotOutput('ic'),
+                 #    downloadButton(outputId = "down5", label = "Download the plot")
+                 # ),
+                 #  conditionalPanel(
+                 #   condition = "input.MethodP == 'PAM'", br(),plotOutput('ip'),
+                 #  downloadButton(outputId = "down8", label = "Download the plot")
+                 #),
+                 #conditionalPanel(
+                 # condition = "input.MethodP == 'SOTA'", br(),plotOutput('iS'),
+                 #downloadButton(outputId = "down17", label = "Download the plot")
+                 #    ),
+                 #   conditionalPanel(
+                 #    condition = "input.MethodP == 'SOM'", br(),plotOutput('iSom'),
+                 #      downloadButton(outputId = "downSO3", label = "Download the plot")
+                 #    )
 
 
                  #)#,
@@ -264,36 +264,36 @@ shinyUI(dashboardPage(
                           )
                  )#,
                  #tabPanel("Variables Distribution ",
-                  #        conditionalPanel(
-                  #          condition= "input.MethodH == 'Hierarchical'",br(), plotOutput('vh'),
+                 #        conditionalPanel(
+                 #          condition= "input.MethodH == 'Hierarchical'",br(), plotOutput('vh'),
                  #           downloadButton(outputId = "down10", label = "Download the plot")
-                #          ),
-              #            conditionalPanel(
-               #             condition= "input.MethodH == 'Diana'",br(), plotOutput('vd'),
-                #            downloadButton(outputId = "down13", label = "Download the plot")
+                 #          ),
+                 #            conditionalPanel(
+                 #             condition= "input.MethodH == 'Diana'",br(), plotOutput('vd'),
+                 #            downloadButton(outputId = "down13", label = "Download the plot")
                  #         )
 
                  #),
-                # tabPanel("Individuals Plot",
+                 # tabPanel("Individuals Plot",
                  #         conditionalPanel(
-                  #          condition= "input.MethodH == 'Hierarchical'",br(), plotOutput('ih'),
-                  #          downloadButton(outputId = "down11", label = "Download the plot")
-                   #       ),
-                   #       conditionalPanel(
-                     #       condition= "input.MethodH == 'Diana'",br(), plotOutput('id'),
-                    # #       downloadButton(outputId = "down14", label = "Download the plot")
- #                         )
-#
+                 #          condition= "input.MethodH == 'Hierarchical'",br(), plotOutput('ih'),
+                 #          downloadButton(outputId = "down11", label = "Download the plot")
+                 #       ),
+                 #       conditionalPanel(
+                 #       condition= "input.MethodH == 'Diana'",br(), plotOutput('id'),
+                 # #       downloadButton(outputId = "down14", label = "Download the plot")
+                 #                         )
+                 #
 
-  #               )
+                 #               )
                  #tabPanel("Elbow method",
-                  #        conditionalPanel(
-                   #         condition= "input.MethodH == 'Hierarchical'",br(), plotOutput('ELH'),
-                    #        downloadButton(outputId = "down111", label = "Download the plot")
-                     #     ),
-                      #    conditionalPanel(
-                       #     condition= "input.MethodH == 'Diana'",br()
-                        #  )
+                 #        conditionalPanel(
+                 #         condition= "input.MethodH == 'Hierarchical'",br(), plotOutput('ELH'),
+                 #        downloadButton(outputId = "down111", label = "Download the plot")
+                 #     ),
+                 #    conditionalPanel(
+                 #     condition= "input.MethodH == 'Diana'",br()
+                 #  )
 
 
                  #)
@@ -322,13 +322,13 @@ shinyUI(dashboardPage(
 
                numericInput("min1", "Input minimum number of cluster ", 2, min = 2, max = 9),
                numericInput("max1", "Input mmaximum number of cluster ", 10, min = 10, max = 20)
-               )
+          )
           , box( status = "primary",  width = 8 ,
-                  tabsetPanel(
-                    selected = "Summary",
-                    tabPanel("Summary",br(),verbatimTextOutput('sumval')),
-                    tabPanel("Optimal Scores",br(),DT::dataTableOutput("optsc"), br(),downloadButton('x3', 'Download Data'))
-                  ))
+                 tabsetPanel(
+                   selected = "Summary",
+                   tabPanel("Summary",br(),verbatimTextOutput('sumval')),
+                   tabPanel("Optimal Scores",br(),DT::dataTableOutput("optsc"), br(),downloadButton('x3', 'Download Data'))
+                 ))
 
 
         ),tags$div(id="cite",
@@ -337,7 +337,7 @@ shinyUI(dashboardPage(
 
         #,
         #fluidRow(
-         # infoBoxOutput("progressBox",width = 6)
+        # infoBoxOutput("progressBox",width = 6)
         #)
       ),
 
@@ -359,43 +359,43 @@ shinyUI(dashboardPage(
                         condition = "input.MethValidEPM == 'stability'",
                         selectInput("Measures", "Choose a measure:",c("APN","AD","ADM",'FOM'))),
                       textOutput('msg3'),textOutput('msg4')),
-          box(title = "Parameters for external preference mapping ",status = "primary", solidHeader = T,
-              collapsible = F,
+                  box(title = "Parameters for external preference mapping ",status = "primary", solidHeader = T,
+                      collapsible = F,
 
 
-               #Type of regression's model
-               selectInput("mapping", "Type of regression's model for mapping",
-                           c('Quadratic','Vector' ,'Circular' , 'Eliptic'),selected = 'Quadratic'),
-              numericInput("ncl", "Input the cluster you want to visualize ", 1, min = 1, max ='output.nbcl')
-              #To fix
-              ,textOutput('msg5')
+                      #Type of regression's model
+                      selectInput("mapping", "Type of regression's model for mapping",
+                                  c('Quadratic','Vector' ,'Circular' , 'Eliptic'),selected = 'Quadratic'),
+                      numericInput("ncl", "Input the cluster you want to visualize ", 1, min = 1, max ='output.nbcl')
+                      #To fix
+                      ,textOutput('msg5')
 
 
 
-               )),
+                  )),
         fluidRow(
-                 box( status = "primary",width=12,
-                  tabsetPanel(
-                    selected = "Sensory variables distribution"
-                    ,
-                    tabPanel("Sensory variables distribution",br(),plotOutput("pca")),
-                    tabPanel("Prediction Plot",br(),plotlyOutput("pred")),
-                    tabPanel("Preference Plot",br(),plotOutput("pref"))
-                    ,
-                    tabPanel("Preference Map",br(),plotlyOutput("map"))
+          box( status = "primary",width=12,
+               tabsetPanel(
+                 selected = "Sensory variables distribution"
+                 ,
+                 tabPanel("Sensory variables distribution",br(),plotOutput("pca"),downloadButton(outputId = "downDIST", label = "Download the plot")),
+                 tabPanel("Prediction Plot",br(),plotlyOutput("pred")),
+                 tabPanel("Preference Plot",br(),plotOutput("pref"),downloadButton(outputId = "downPM", label = "Download the plot"))
+                 ,
+                 tabPanel("Preference Map",br(),plotlyOutput("map"))
 
-                  ))
+               ))
 
 
         ),tags$div(id="cite",
-                  '\U00A9 Imen Bouzidi'
+                   '\U00A9 Imen Bouzidi'
         )
       )
       )
 
 
 
-)
+    )
 
 
 
@@ -404,7 +404,7 @@ shinyUI(dashboardPage(
   )
 
 
-)
+  )
 
 
 
