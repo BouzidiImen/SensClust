@@ -19,7 +19,11 @@ devtools::install_github("BouzidiImen/ClusteringR")
 Usage
 -----
 
-You can find below an overall look at how ClusteringR can be useful for your sensory analysis. \#\#\#Clustering : Diverse methods of clustering are available in the ClusteringR package :
+You can find below an overall look at how ClusteringR can be useful for your sensory analysis.
+
+### Clustering :
+
+Diverse methods of clustering are available in the ClusteringR package :
 
 'hierarchical', 'diana', 'kmeans', 'clara', 'pam', 'sota' and 'som'
 
@@ -53,6 +57,10 @@ E <- EPM(hedo,senso,ModelType='Quadratic',respt=FALSE,nbpoints=50,Graphpred=FALS
 ```
 
 <img src="man/figures/fig.png" align="center" />
+
+``` r
+help("EPM") # to see more information about the function of external preferences mapping 
+```
 
 Data available in the package
 -----------------------------

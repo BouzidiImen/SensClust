@@ -16,6 +16,7 @@
 #' @import plotly
 #' @import fields
 #' @import factoextra
+#' @import RColorBrewer
 #' @return pred,pref,Regression,Statistic.values,Graphpred,Graph2D,Graph3D
 #'
 #' @export
@@ -88,10 +89,12 @@ EPM=function(Y,X,ModelType='Quadratic',respt=FALSE,nbpoints=50,Graphpred=FALSE,G
 
   if(Graphpred)show(p1)
   if(Graph2D) {
-    image.plot(imgpref,main='External Preference Mapping',col=terrain.colors(100))
+    c=colorRampPalette(brewer.pal(9,'YlGn'))
+    image.plot(imgpref,main='External Preference Mapping',col=c(1000),legend.lab='Individual Pourcentage'
+    )
     graphics::contour(x=imgpref$x,y=imgpref$y,z=imgpref$z,add=T,levels = seq(from=0,to=100,by=5))
-    graphics::text(x=Dim1,y=Dim2,labels = rownames(Y),pos=3)
-    graphics::points(x=Dim1,y=Dim2,pch=20)
+    graphics::text(x=Dim1,y=Dim2,labels = rownames(Y),pos=3,col='#17202a',cex=1.25)
+    graphics::points(x=Dim1,y=Dim2,pch=20,cex=1.5)
 
     }
   if(Graph3D) show(p3)

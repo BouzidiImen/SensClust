@@ -20,9 +20,11 @@ Depends:
     R (>= 3.1)
 Imports: 
     FactoMineR,
-    factoextra,cluster,
+    factoextra,
+    cluster,
     clValid,
     kohonen,
-    fields
+    fields,
+    RColorBrewer
 URL: https://github.com/BouzidiImen/ClusteringR
 BugReports: https://github.com/BouzidiImen/ClusteringR/issues
