@@ -48,7 +48,7 @@ help("Clustering") # to see more information about the function of clustering
 
 ### Sensory Analysis :
 
-Based on the sensory map, this package make it easier to know consumer behaviour, their likes and dislikes.
+Based on the sensory map, this package make it easier to know consumers's behaviour, their likes and dislikes.
 
 ``` r
 library(ClusteringR)
