@@ -52,7 +52,7 @@ Based on the sensory map, this package make it easier to know consumer behaviour
 
 ``` r
 library(ClusteringR)
-# Create a clustering object  -------------------------------------------------
+# Create an EPM object  -------------------------------------------------
 E <- EPM(hedo,senso,ModelType='Quadratic',respt=FALSE,nbpoints=50,Graphpred=FALSE,Graph2D=TRUE,Graph3D=FALSE,statistic.Value.Type='rsquared')
 ```
 
